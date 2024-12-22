@@ -1,0 +1,16 @@
+tags:
+  - Base Datos
+responses:
+  200:
+    description: Lista de directorios
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            mensaje:
+              type: array
+              items:
+                type: string
+              example:
+                ["/home/user/Escritorio/dir1", "/home/user/Escritorio/dir2"]

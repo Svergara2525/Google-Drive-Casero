@@ -1,0 +1,35 @@
+tags:
+  - Base Datos
+parameters:
+  - name: directorio
+    in: path
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: Lista de subcarpetas
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            subcarpetas:
+              type: array
+              items:
+                type: string
+              example:
+                [
+                  "/home/user/Escritorio/dir1/subdir1",
+                  "/home/user/Escritorio/dir1/subdir2",
+                ]
+  404:
+    description: Directorio no encontrado
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Directorio no encontrado
