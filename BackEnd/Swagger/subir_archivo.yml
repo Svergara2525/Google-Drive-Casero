@@ -1,0 +1,41 @@
+tags:
+  - Archivos
+summary: Subir múltiples archivos
+description: Endpoint para cargar archivos en el servidor.
+consumes:
+  - multipart/form-data
+produces:
+  - application/json
+parameters:
+  - name: file
+    in: formData
+    description: Los archivos a subir.
+    required: true
+    type: array
+    items:
+      type: file
+responses:
+  200:
+    description: Archivos subidos exitosamente.
+    schema:
+      type: object
+      properties:
+        mensaje:
+          type: string
+          example: 3 archivos subidos exitosamente.
+  400:
+    description: No se han enviado archivos.
+    schema:
+      type: object
+      properties:
+        mensaje:
+          type: string
+          example: No se han enviado archivos.
+  404:
+    description: No se ha seleccionado ningún archivo.
+    schema:
+      type: object
+      properties:
+        mensaje:
+          type: string
+          example: No se ha seleccionado ningún archivo.
