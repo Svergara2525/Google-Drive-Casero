@@ -1,20 +1,9 @@
-import axios from 'axios';
-import React from 'react';
+import axios from "axios";
 
-const baseURL = "";
+export const apiClient = (() => {
+  const conexion = "http://127.0.0.1:5000/conexion";
 
-export const apliClient =  (() => {
-    const [post, setPost] = React.useState(null);
-
-    React.useEffect(() => {
-        axios.get(baseURL).then((response) => {
-            setPost(response.data);
-        });
-    }, []);
-
-    if (!post) {
-        return null;
-    }
-
-    
-})
+  return {
+    getFWS: () => axios.get(conexion).then((response) => response.data),
+  };
+})();

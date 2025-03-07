@@ -10,18 +10,25 @@ from jobRunner import run_jobs_and_save_output
 
 from swagger_config import swagger_config
 from swagger_template import swagger_template
+from flask_cors import CORS
 
 
 app = Flask(__name__)
 
 app.config.from_object('config')
 
+CORS(app)
+
 swagger = Swagger(app, config=swagger_config, template=swagger_template)
 
 
+# Obtener la ruta del escritorio
+dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
 
-@app.route('/conexion')
-@swag_from('Swagger/conexion.yml')
+
+
+@app.route('/conexion', methods=['GET'])
+@swag_from('swaggerDocs/conexion.yml')
 def conexion():
     directories = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
     directory_names = [os.path.basename(d) for d in directories]
@@ -29,7 +36,6 @@ def conexion():
 
 
 @app.route('/navegar/<string:directorio>')
-@swag_from('Swagger/navegar.yml')
 def navegar(directorio):
     global dir_path
     directories = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
@@ -44,7 +50,6 @@ def navegar(directorio):
 
 
 @app.route('/retroceder')
-@swag_from('Swagger/retroceder.yml')
 def retroceder():
     global dir_path
     dir_path = os.path.dirname(dir_path)
@@ -55,7 +60,6 @@ def retroceder():
 
 
 @app.route('/subir_archivo', methods=['POST'])
-@swag_from('Swagger/subir_archivo.yml')
 def subir_archivo():
     if 'file' not in request.files:
         return jsonify({"mensaje": "No se ha enviado el archivo"}), 400

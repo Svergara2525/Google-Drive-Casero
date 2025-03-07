@@ -1,21 +1,16 @@
 tags:
-  - Users
-summary: Retrieve a list of users
-description: Retrieve a list of all users
+  - Directories
 responses:
   200:
-    description: A list of users
+    description: A list of directory names
     schema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: integer
-            example: 1
-          user:
+      type: object
+      properties:
+        mensaje:
+          type: array
+          items:
             type: string
-            example: "john_doe"
+          example: ["dir1", "dir2", "dir3"]
   401:
     description: Unauthorized
     schema:
