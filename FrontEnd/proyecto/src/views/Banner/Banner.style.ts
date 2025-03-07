@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const BannerWrapper = styled.div`
   background-color: lightblue;
   text-align: center;
-  width: 35%;
+  width: 17%;
   height: 100vh;
 `;
