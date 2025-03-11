@@ -66,6 +66,7 @@ def retroceder():
 
 
 @app.route('/subir_archivo', methods=['POST'])
+@swag_from('swaggerDocs/subir_archivo.yml')
 def subir_archivo():
     if 'file' not in request.files:
         return jsonify({"mensaje": "No se ha enviado el archivo"}), 400
