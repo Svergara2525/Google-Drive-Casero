@@ -32,10 +32,11 @@ dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
 def conexion():
     directories = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
     directory_names = [os.path.basename(d) for d in directories]
-    return jsonify({"mensaje": directory_names})
+    return jsonify({"mensaje": directory_names}), 200
 
 
 @app.route('/navegar/<string:directorio>')
+@swag_from('swaggerDocs/navegar.yml')
 def navegar(directorio):
     global dir_path
     directories = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
@@ -46,16 +47,21 @@ def navegar(directorio):
         app.config['UPLOAD_FOLDER'] = dir_path
     else:
         subfolders = "No existe el subdirectorio"
-    return jsonify({"subcarpetas": subfolders})
+    return jsonify({"mensaje": subfolders}), 200
 
 
 @app.route('/retroceder')
+@swag_from('swaggerDocs/retroceder.yml')
 def retroceder():
     global dir_path
+    print(dir_path)
+    if (dir_path == os.path.join(os.path.expanduser("~"), "Desktop")):
+        return jsonify({"mensaje": "No se puede retroceder más"}), 401
+    
     dir_path = os.path.dirname(dir_path)
     subfolders = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
     app.config['UPLOAD_FOLDER'] = dir_path
-    return jsonify({"subcarpetas": subfolders})
+    return jsonify({"mensaje": subfolders}), 200
 
 
 

@@ -1,8 +1,7 @@
-import * as S from "./Banner.style";
 import { apiClient } from "../../infrastructure/apiClient";
 import { useState, useEffect } from "react";
 
-export const Banner: React.FC = () => {
+export const MainPage: React.FC = () => {
   const [data, setData] = useState<string[] | null>(null);
   const [loading, setLoading] = useState<boolean | null>(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +23,7 @@ export const Banner: React.FC = () => {
   }, []);
 
   return (
-    <S.BannerWrapper>
+    <div>
       {loading && <div>Cargando...</div>}
       {error && <div>{error}</div>}
       {data && (
@@ -34,6 +33,6 @@ export const Banner: React.FC = () => {
           ))}
         </div>
       )}
-    </S.BannerWrapper>
+    </div>
   );
 };

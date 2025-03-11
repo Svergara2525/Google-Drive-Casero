@@ -1,0 +1,35 @@
+tags:
+  - "Directories"
+parameters:
+  - name: "directorio"
+    in: "path"
+    required: true
+    type: "string"
+    description: "Nombre del directorio a navegar"
+responses:
+  200:
+    description: "A list of directory names"
+    schema:
+      type: "object"
+      properties:
+        subcarpetas:
+          type: "array"
+          items:
+            type: "string"
+          example: ["dir1", "dir2", "dir3"]
+  401:
+    description: "Unauthorized"
+    schema:
+      type: "object"
+      properties:
+        message:
+          type: "string"
+          example: "Unauthorized"
+  500:
+    description: "Internal server error"
+    schema:
+      type: "object"
+      properties:
+        message:
+          type: "string"
+          example: "Internal server error"

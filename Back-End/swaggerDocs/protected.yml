@@ -1,9 +1,0 @@
-tags:
-  - Protected
-security:
-  - Bearer: []
-responses:
-  200:
-    description: Access granted
-  401:
-    description: Invalid token
