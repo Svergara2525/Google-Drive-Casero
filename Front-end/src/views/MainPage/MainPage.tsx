@@ -6,13 +6,18 @@ export const MainPage: React.FC = () => {
   const [data, setData] = useState<string[] | null>(null);
   const [loading, setLoading] = useState<boolean | null>(true);
   const [error, setError] = useState<string | null>(null);
+  const [path, setPath] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient.getFWS();
-        console.log(response);
-        setData(response.mensaje);
+        if (path === null) {
+          const response = await apiClient.getFWS();
+          setData(response.mensaje);
+        } else {
+          const response = await apiClient.folderSelect(path);
+          setData(response.subcarpetas);
+        }
       } catch (error) {
         console.log(error);
         setError("Error al cargar los datos");
@@ -21,21 +26,11 @@ export const MainPage: React.FC = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [path]);
 
   const handleClick = (item: string) => {
-    const fetchData = async () => {
-      try {
-        const response = await apiClient.folderSelect(item);
-        setData(response.subcarpetas);
-      } catch (error) {
-        setError("Error al cargar los datos");
-      } finally {
-        console.log("error");
-        setLoading(false);
-      }
-    };
-    fetchData();
+    localStorage.setItem("path", (path ?? "") + "/" + item);
+    setPath(localStorage.getItem("path"));
   };
 
   return (

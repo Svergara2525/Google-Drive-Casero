@@ -6,7 +6,7 @@ export const apiClient = (() => {
     getFWS: () => axios.get(conexion).then((response) => response.data),
     folderSelect: (folderSelect: string) =>
       axios
-        .get(conexion + "/" + folderSelect)
+        .get(conexion + folderSelect)
         .then((response) => response.data),
   };
 })();

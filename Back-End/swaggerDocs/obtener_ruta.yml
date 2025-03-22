@@ -1,0 +1,29 @@
+tags:
+  - Directories
+responses:
+  200:
+    description: URL updated
+    schema:
+      type: object
+      properties:
+        mensaje:
+          type: array
+          items:
+            type: string
+          example: "Ruta actualizada"
+  401:
+    description: Unauthorized
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "No se puede eliminar la ruta"
+  500:
+    description: Internal server error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Internal server error"

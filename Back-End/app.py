@@ -10,6 +10,7 @@ from jobRunner import run_jobs_and_save_output
 
 from swagger_config import swagger_config
 from swagger_template import swagger_template
+from config import URL_FOLDER
 from flask_cors import CORS
 
 
@@ -22,14 +23,12 @@ CORS(app)
 swagger = Swagger(app, config=swagger_config, template=swagger_template)
 
 
-# Obtener la ruta del escritorio
-
-
 
 @app.route('/', methods=['GET'])
 @swag_from('swaggerDocs/conexion.yml')
 def conexion():
     dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    print(dir_path)
     directories = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
     directory_names = [os.path.basename(d) for d in directories]
     return jsonify({"mensaje": directory_names}), 200
@@ -40,6 +39,7 @@ def conexion():
 def navegar(directorio):
     dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
     dir_path = os.path.join(dir_path, directorio);
+    print(dir_path)
     if os.path.isdir(dir_path):
         subfolders = [f.name for f in os.scandir(dir_path) if f.is_dir()]
         return jsonify({"directorio": directorio, "subcarpetas": subfolders}), 200
@@ -47,7 +47,6 @@ def navegar(directorio):
         subfolders = "No existe el subdirectorio"
         return jsonify({"Mensaje": subfolders}), 404
     
-
 
 
 @app.route('/subir_archivo', methods=['POST'])

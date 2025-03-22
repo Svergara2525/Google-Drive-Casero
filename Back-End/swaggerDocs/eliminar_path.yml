@@ -1,0 +1,29 @@
+tags:
+  - Directories
+responses:
+  200:
+    description: Delete path
+    schema:
+      type: object
+      properties:
+        mensaje:
+          type: array
+          items:
+            type: string
+          example: "ruta"
+  401:
+    description: Unauthorized
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Unauthorized"
+  500:
+    description: Internal server error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Internal server error"

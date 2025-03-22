@@ -14,8 +14,6 @@ export const StyledFolderWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 75vh;
-  width: 100%;
   gap: 20px;
 `;
 
@@ -28,10 +26,7 @@ export const StyledButton = styled.button`
   width: 90%;
 `;
 
-export const StyledFolder = styled.button`
-  display: flex;
-  justify-content: center;
+export const StyledFolder = styled.div`
   background-color: lightgrey;
-  height: 5vh;
-  width: 10%;
+  user-select: none;
 `;
