@@ -6,18 +6,13 @@ export const MainPage: React.FC = () => {
   const [data, setData] = useState<string[] | null>(null);
   const [loading, setLoading] = useState<boolean | null>(true);
   const [error, setError] = useState<string | null>(null);
-  const [path, setPath] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (path === null) {
-          const response = await apiClient.getFWS();
-          setData(response.mensaje);
-        } else {
-          const response = await apiClient.folderSelect(path);
-          setData(response.subcarpetas);
-        }
+        const response = await apiClient.getFWS();
+        history.pushState({ data: response.subcarpetas }, "", "/");
+        setData(response.subcarpetas);
       } catch (error) {
         console.log(error);
         setError("Error al cargar los datos");
@@ -26,11 +21,32 @@ export const MainPage: React.FC = () => {
       }
     };
     fetchData();
-  }, [path]);
+  }, []);
 
   const handleClick = (item: string) => {
-    localStorage.setItem("path", (path ?? "") + "/" + item);
-    setPath(localStorage.getItem("path"));
+    const fetchData = async () => {
+      try {
+        console.log(window.location.pathname);
+        const nuevaURL =
+          window.location.pathname === "/"
+            ? `/${item}`
+            : `${window.location.pathname}/${item}`;
+        const response = await apiClient.folderSelect(nuevaURL);
+        history.pushState({ data: response.subcarpetas }, "", nuevaURL);
+        setData(response.subcarpetas);
+      } catch (error) {
+        console.log(error);
+        setError("Error al cargar los datos");
+      }
+    };
+    fetchData();
+  };
+
+  window.onpopstate = (event) => {
+    console.log("He hecho click atrás", event.state.data);
+    if (event.state && event.state.data) {
+      setData(event.state.data);
+    }
   };
 
   return (

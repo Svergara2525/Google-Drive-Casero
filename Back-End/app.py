@@ -31,7 +31,7 @@ def conexion():
     print(dir_path)
     directories = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
     directory_names = [os.path.basename(d) for d in directories]
-    return jsonify({"mensaje": directory_names}), 200
+    return jsonify({"subcarpetas": directory_names}), 200
 
 
 @app.route('/<path:directorio>')
