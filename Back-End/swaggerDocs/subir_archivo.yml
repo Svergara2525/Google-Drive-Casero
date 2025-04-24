@@ -7,6 +7,11 @@ consumes:
 produces:
   - "application/json"
 parameters:
+  - name: "path"
+    in: "formData"
+    required: true
+    type: "string"
+    description: "Ruta relativa en el escritorio donde se guardarán los archivos"
   - name: "file"
     in: "formData"
     required: true

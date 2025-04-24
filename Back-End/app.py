@@ -10,7 +10,6 @@ from jobRunner import run_jobs_and_save_output
 
 from swagger_config import swagger_config
 from swagger_template import swagger_template
-from config import URL_FOLDER
 from flask_cors import CORS
 
 
@@ -37,9 +36,10 @@ def conexion():
 @app.route('/<path:directorio>')
 @swag_from('swaggerDocs/navegar.yml')
 def navegar(directorio):
+    print("El directorio a añadir: ", directorio)
     dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
     dir_path = os.path.join(dir_path, directorio);
-    print(dir_path)
+    print("Estamos en el directorio: ", dir_path)
     if os.path.isdir(dir_path):
         subfolders = [f.name for f in os.scandir(dir_path) if f.is_dir()]
         return jsonify({"directorio": directorio, "subcarpetas": subfolders}), 200
@@ -48,18 +48,22 @@ def navegar(directorio):
         return jsonify({"Mensaje": subfolders}), 404
     
 
-
 @app.route('/subir_archivo', methods=['POST'])
 @swag_from('swaggerDocs/subir_archivo.yml')
 def subir_archivo():
-    if 'file' not in request.files:
+    path = request.form.get('path')
+    print("El directorio a añadir: ", path)
+    dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    dir_path = os.path.join(dir_path, path);
+    print("Quiero subir archivos a este directorio: ", dir_path)
+    if not request.files.getlist('file'):
         return jsonify({"mensaje": "No se ha enviado el archivo"}), 400
     files = request.files.getlist('file')
     if len(files) == 0:
         return jsonify({"mensaje": "No se ha seleccionado el archivo"}), 404
     for file in files:
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        file.save(os.path.join(dir_path, filename))
     return jsonify({"mensaje": "Archivo subido"}), 200
     
 if __name__ == '__main__':
