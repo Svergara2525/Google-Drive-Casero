@@ -2,11 +2,14 @@ import { apiClient } from "../../infrastructure/apiClient";
 import { useState, useEffect } from "react";
 import * as S from "./MainPage.style";
 
-export const MainPage: React.FC = () => {
+interface Props {
+  setShowModal: (valor: boolean | null) => void;
+}
+
+export const MainPage: React.FC<Props> = ({ setShowModal }) => {
   const [data, setData] = useState<string[] | null>(null);
   const [loading, setLoading] = useState<boolean | null>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,30 +46,6 @@ export const MainPage: React.FC = () => {
     fetchData();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFiles(event.target.files);
-    }
-  };
-
-  const handleUpload = () => {
-    const formData = new FormData();
-    formData.append("path", window.location.pathname.replace(/^\/+/, ""));
-    if (selectedFiles) {
-      for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append("file", selectedFiles[i]);
-      }
-    }
-    const fetchData = async () => {
-      try {
-        await apiClient.uploadFile(formData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  };
-
   window.onpopstate = (event) => {
     if (event.state && event.state.data) {
       setData(event.state.data);
@@ -76,9 +55,20 @@ export const MainPage: React.FC = () => {
   return (
     <div>
       <S.StyledButtonWrapper>
-        <S.StyledButton>Crear carpeta</S.StyledButton>
-        <input type="file" multiple onChange={handleFileChange} />
-        <S.StyledButton onClick={handleUpload}>Subir archivo</S.StyledButton>
+        <S.StyledButton
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          Crear carpeta
+        </S.StyledButton>
+        <S.StyledButton
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          Subir archivo
+        </S.StyledButton>
       </S.StyledButtonWrapper>
       <div>
         {loading && <S.StyledFolderWrapper>Cargando...</S.StyledFolderWrapper>}
