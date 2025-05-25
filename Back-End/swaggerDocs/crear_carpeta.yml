@@ -1,0 +1,34 @@
+tags:
+  - "Directories"
+summary: "Crear carpeta"
+description: "Crea una nueva carpeta en la ruta especificada"
+consumes:
+  - "application/x-www-form-urlencoded"
+produces:
+  - "application/json"
+parameters:
+  - name: "path"
+    in: "formData"
+    required: true
+    type: "string"
+    description: "Ruta donde se creará la nueva carpeta"
+responses:
+  200:
+    description: "Carpeta creada correctamente"
+    schema:
+      type: "object"
+      properties:
+        mensaje:
+          type: "string"
+          example: "Carpeta creada correctamente"
+  500:
+    description: "Error al crear la carpeta"
+    schema:
+      type: "object"
+      properties:
+        mensaje:
+          type: "string"
+          example: "Error al crear la carpeta"
+        error:
+          type: "string"
+          example: "Detalles del error"

@@ -1,6 +1,7 @@
 import os
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
+from pathlib import Path
 
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
@@ -52,7 +53,6 @@ def navegar(directorio):
 @swag_from('swaggerDocs/subir_archivo.yml')
 def subir_archivo():
     path = request.form.get('path')
-    print("El directorio a añadir: ", path)
     dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
     dir_path = os.path.join(dir_path, path);
     print("Quiero subir archivos a este directorio: ", dir_path)
@@ -65,6 +65,24 @@ def subir_archivo():
         filename = secure_filename(file.filename)
         file.save(os.path.join(dir_path, filename))
     return jsonify({"mensaje": "Archivo subido"}), 200
+
+@app.route('/crear_carpeta', methods=['POST'])
+@swag_from('swaggerDocs/crear_carpeta.yml')
+def crear_carpeta():
+    path = request.form.get('path')
+    if not path:
+        return jsonify({"mensaje": "No se ha proporcionado el nombre de la carpeta"}), 404
+    print("El path de la carpeta a crear: ", path)
+    dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    dir_path = Path(os.path.join(dir_path, path));
+    print("Quiero subir archivos a este directorio: ", dir_path)
+    try:
+        dir_path.mkdir(parents=True)
+        return jsonify({"mensaje": "Carpeta creada correctamente"}), 200
+    except Exception as e:
+        return jsonify({"mensaje": "Error al crear la carpeta", "error": str(e)}), 500
+
+
     
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)

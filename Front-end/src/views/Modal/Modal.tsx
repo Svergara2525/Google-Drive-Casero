@@ -9,6 +9,7 @@ interface Props {
 
 export const Modal: React.FC<Props> = ({ setShowModal }) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [folderName, setFolderlName] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -34,12 +35,41 @@ export const Modal: React.FC<Props> = ({ setShowModal }) => {
     fetchData();
   };
 
+  const createFolder = (folderName: string) => {
+    const formData = new FormData();
+    formData.append(
+      "path",
+      window.location.pathname.replace(/^\/+/, "") + folderName
+    );
+    const fetchData = async () => {
+      try {
+        await apiClient.createFolder(formData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  };
+
+  const handleFolderName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFolderlName(event.target.value);
+  };
+
   return (
     <S.BackgroundDark>
       <S.ModalWrapper>
+        {}
         <input type="file" multiple onChange={handleFileChange} />
         <button onClick={handleUpload}>Subir archivo</button>
         <button onClick={() => setShowModal(false)}>Cerrar</button>
+        <button onClick={() => createFolder(folderName ?? "")}>
+          Crear carpeta
+        </button>
+        <input
+          type="text"
+          value={folderName ?? ""}
+          onChange={handleFolderName}
+        />
       </S.ModalWrapper>
     </S.BackgroundDark>
   );
