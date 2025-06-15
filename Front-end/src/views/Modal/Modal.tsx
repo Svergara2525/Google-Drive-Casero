@@ -39,7 +39,7 @@ export const Modal: React.FC<Props> = ({ setShowModal }) => {
     const formData = new FormData();
     formData.append(
       "path",
-      window.location.pathname.replace(/^\/+/, "") + folderName
+      window.location.pathname.replace(/^\/+/, "") + "/" + folderName
     );
     const fetchData = async () => {
       try {

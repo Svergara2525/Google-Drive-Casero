@@ -27,7 +27,7 @@ swagger = Swagger(app, config=swagger_config, template=swagger_template)
 @app.route('/', methods=['GET'])
 @swag_from('swaggerDocs/conexion.yml')
 def conexion():
-    dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    dir_path = os.path.join(os.path.expanduser("~"))
     print(dir_path)
     directories = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
     directory_names = [os.path.basename(d) for d in directories]
@@ -38,7 +38,7 @@ def conexion():
 @swag_from('swaggerDocs/navegar.yml')
 def navegar(directorio):
     print("El directorio a añadir: ", directorio)
-    dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    dir_path = os.path.join(os.path.expanduser("~"))
     dir_path = os.path.join(dir_path, directorio);
     print("Estamos en el directorio: ", dir_path)
     if os.path.isdir(dir_path):
@@ -53,7 +53,7 @@ def navegar(directorio):
 @swag_from('swaggerDocs/subir_archivo.yml')
 def subir_archivo():
     path = request.form.get('path')
-    dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    dir_path = os.path.join(os.path.expanduser("~"))
     dir_path = os.path.join(dir_path, path);
     print("Quiero subir archivos a este directorio: ", dir_path)
     if not request.files.getlist('file'):
@@ -73,7 +73,7 @@ def crear_carpeta():
     if not path:
         return jsonify({"mensaje": "No se ha proporcionado el nombre de la carpeta"}), 404
     print("El path de la carpeta a crear: ", path)
-    dir_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    dir_path = os.path.join(os.path.expanduser("~"))
     dir_path = Path(os.path.join(dir_path, path));
     print("Quiero subir archivos a este directorio: ", dir_path)
     try:
