@@ -5,9 +5,19 @@ import * as S from "./Modal.style";
 
 interface Props {
   setShowModal: (valor: boolean | null) => void;
+  showFileModal: boolean | null;
+  showFolderModal: boolean | null;
+  setShowFileModal: (valor: boolean | null) => void;
+  setShowFolderModal: (valor: boolean | null) => void;
 }
 
-export const Modal: React.FC<Props> = ({ setShowModal }) => {
+export const Modal: React.FC<Props> = ({
+  setShowModal,
+  showFileModal,
+  showFolderModal,
+  setShowFileModal,
+  setShowFolderModal,
+}) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [folderName, setFolderlName] = useState<string | null>(null);
 
@@ -16,6 +26,9 @@ export const Modal: React.FC<Props> = ({ setShowModal }) => {
       setSelectedFiles(event.target.files);
     }
   };
+
+  console.log("variable file modal", showFileModal);
+  console.log("variable folder modal", showFolderModal);
 
   const handleUpload = () => {
     const formData = new FormData();
@@ -58,18 +71,41 @@ export const Modal: React.FC<Props> = ({ setShowModal }) => {
   return (
     <S.BackgroundDark>
       <S.ModalWrapper>
-        {}
-        <input type="file" multiple onChange={handleFileChange} />
-        <button onClick={handleUpload}>Subir archivo</button>
-        <button onClick={() => setShowModal(false)}>Cerrar</button>
-        <button onClick={() => createFolder(folderName ?? "")}>
-          Crear carpeta
-        </button>
-        <input
-          type="text"
-          value={folderName ?? ""}
-          onChange={handleFolderName}
-        />
+        {showFileModal && (
+          <div>
+            <input type="file" multiple onChange={handleFileChange} />
+            <button onClick={handleUpload}>Subir archivo</button>
+            <button
+              onClick={() => {
+                setShowModal(false);
+                setShowFileModal(false);
+              }}
+            >
+              Cerrar
+            </button>
+          </div>
+        )}
+
+        {showFolderModal && (
+          <div>
+            <button onClick={() => createFolder(folderName ?? "")}>
+              Crear carpeta
+            </button>
+            <input
+              type="text"
+              value={folderName ?? ""}
+              onChange={handleFolderName}
+            />
+            <button
+              onClick={() => {
+                setShowModal(false);
+                setShowFolderModal(false);
+              }}
+            >
+              Cerrar
+            </button>
+          </div>
+        )}
       </S.ModalWrapper>
     </S.BackgroundDark>
   );

@@ -1,12 +1,22 @@
 import { apiClient } from "../../infrastructure/apiClient";
 import { useState, useEffect } from "react";
+
+import { FaFolder } from "react-icons/fa";
+import { SlOptionsVertical } from "react-icons/sl";
+
 import * as S from "./MainPage.style";
 
 interface Props {
   setShowModal: (valor: boolean | null) => void;
+  setShowFileModal: (valor: boolean | null) => void;
+  setShowFolderModal: (valor: boolean | null) => void;
 }
 
-export const MainPage: React.FC<Props> = ({ setShowModal }) => {
+export const MainPage: React.FC<Props> = ({
+  setShowModal,
+  setShowFileModal,
+  setShowFolderModal,
+}) => {
   const [data, setData] = useState<string[] | null>(null);
   const [loading, setLoading] = useState<boolean | null>(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,11 +63,12 @@ export const MainPage: React.FC<Props> = ({ setShowModal }) => {
   };
 
   return (
-    <div>
+    <S.StyledMainPageWrapper>
       <S.StyledButtonWrapper>
         <S.StyledButton
           onClick={() => {
             setShowModal(true);
+            setShowFolderModal(true);
           }}
         >
           Crear carpeta
@@ -65,6 +76,7 @@ export const MainPage: React.FC<Props> = ({ setShowModal }) => {
         <S.StyledButton
           onClick={() => {
             setShowModal(true);
+            setShowFileModal(true);
           }}
         >
           Subir archivo
@@ -77,12 +89,14 @@ export const MainPage: React.FC<Props> = ({ setShowModal }) => {
           <S.StyledFolderWrapper>
             {data.map((item: string, index: any) => (
               <S.StyledFolder key={index} onClick={() => handleClick(item)}>
+                <FaFolder />
                 {item}
+                <SlOptionsVertical />
               </S.StyledFolder>
             ))}
           </S.StyledFolderWrapper>
         )}
       </div>
-    </div>
+    </S.StyledMainPageWrapper>
   );
 };
