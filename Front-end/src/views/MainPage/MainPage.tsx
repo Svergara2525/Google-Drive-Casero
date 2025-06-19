@@ -1,5 +1,6 @@
 import { apiClient } from "../../infrastructure/apiClient";
 import { useState, useEffect } from "react";
+import { Data } from "../../Models/data";
 
 import { FaFolder } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
@@ -17,7 +18,7 @@ export const MainPage: React.FC<Props> = ({
   setShowFileModal,
   setShowFolderModal,
 }) => {
-  const [data, setData] = useState<string[] | null>(null);
+  const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState<boolean | null>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,8 +26,8 @@ export const MainPage: React.FC<Props> = ({
     const fetchData = async () => {
       try {
         const response = await apiClient.getFWS();
-        history.pushState({ data: response.subcarpetas }, "", "/");
-        setData(response.subcarpetas);
+        history.pushState({ data: response }, "", "/");
+        setData(response);
       } catch (error) {
         console.log(error);
         setError("Error al cargar los datos");
@@ -46,8 +47,8 @@ export const MainPage: React.FC<Props> = ({
             ? `/${item}`
             : `${window.location.pathname}/${item}`;
         const response = await apiClient.folderSelect(nuevaURL);
-        history.pushState({ data: response.subcarpetas }, "", nuevaURL);
-        setData(response.subcarpetas);
+        history.pushState({ data: response }, "", nuevaURL);
+        setData(response);
       } catch (error) {
         console.log(error);
         setError("Error al cargar los datos");
@@ -86,15 +87,27 @@ export const MainPage: React.FC<Props> = ({
         {loading && <S.StyledFolderWrapper>Cargando...</S.StyledFolderWrapper>}
         {error && <S.StyledFolderWrapper>{error}</S.StyledFolderWrapper>}
         {data && (
-          <S.StyledFolderWrapper>
-            {data.map((item: string, index: any) => (
-              <S.StyledFolder key={index} onClick={() => handleClick(item)}>
-                <FaFolder />
-                {item}
-                <SlOptionsVertical />
-              </S.StyledFolder>
-            ))}
-          </S.StyledFolderWrapper>
+          <div>
+            <S.StyledFolderWrapper>
+              {data.subcarpetas.map((item: string, index: any) => (
+                <S.StyledFolder key={index} onClick={() => handleClick(item)}>
+                  <FaFolder />
+                  {item}
+                  <SlOptionsVertical />
+                </S.StyledFolder>
+              ))}
+            </S.StyledFolderWrapper>
+            <div>
+              {data.archivos &&
+                data.archivos.map((item: string, index: any) => (
+                  <img
+                    src={`http://localhost:5001/files${item}`}
+                    alt="Imagen"
+                    key={index}
+                  />
+                ))}
+            </div>
+          </div>
         )}
       </div>
     </S.StyledMainPageWrapper>

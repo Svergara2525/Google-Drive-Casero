@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from pathlib import Path
 
@@ -42,8 +42,15 @@ def navegar(directorio):
     dir_path = os.path.join(dir_path, directorio);
     print("Estamos en el directorio: ", dir_path)
     if os.path.isdir(dir_path):
-        subfolders = [f.name for f in os.scandir(dir_path) if f.is_dir()]
-        return jsonify({"directorio": directorio, "subcarpetas": subfolders}), 200
+        subfolders = []
+        files = []
+        for entry in os.scandir(dir_path):
+            if entry.is_dir():
+                subfolders.append(entry.name)
+            elif entry.is_file():
+                file_path = os.path.join(dir_path, entry.name)
+                files.append(file_path)
+        return jsonify({"subcarpetas": subfolders, "archivos": files}), 200
     else:
         subfolders = "No existe el subdirectorio"
         return jsonify({"Mensaje": subfolders}), 404
@@ -65,6 +72,15 @@ def subir_archivo():
         filename = secure_filename(file.filename)
         file.save(os.path.join(dir_path, filename))
     return jsonify({"mensaje": "Archivo subido"}), 200
+
+
+@app.route('/files/<path:filepath>', methods=['GET'])
+def servir_archivo(filepath):
+    full_path = os.path.abspath('/' + filepath)
+    print("El path del archivo a servir: ", full_path)
+    return send_file(full_path)
+
+    
 
 @app.route('/crear_carpeta', methods=['POST'])
 @swag_from('swaggerDocs/crear_carpeta.yml')

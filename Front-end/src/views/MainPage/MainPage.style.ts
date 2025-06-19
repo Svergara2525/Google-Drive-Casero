@@ -23,6 +23,7 @@ export const StyledFolderWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 20px;
+  max-width: 90%;
 `;
 
 export const StyledButton = styled.button`
