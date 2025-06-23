@@ -97,16 +97,22 @@ export const MainPage: React.FC<Props> = ({
                 </S.StyledFolder>
               ))}
             </S.StyledFolderWrapper>
-            <div>
+            <S.StyledFilesWrapper>
               {data.archivos &&
                 data.archivos.map((item: string, index: any) => (
-                  <img
-                    src={`http://localhost:5001/files${item}`}
-                    alt="Imagen"
-                    key={index}
-                  />
+                  <S.StyledImageWrapper>
+                    <S.StyledOptionsFileWrapper>
+                      <>Foto {index}</>
+                      <SlOptionsVertical />
+                    </S.StyledOptionsFileWrapper>
+                    <S.StyledImage
+                      src={`http://localhost:5001/files${item}`}
+                      alt="Imagen"
+                      key={index}
+                    />
+                  </S.StyledImageWrapper>
                 ))}
-            </div>
+            </S.StyledFilesWrapper>
           </div>
         )}
       </div>
