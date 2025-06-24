@@ -21,6 +21,8 @@ export const MainPage: React.FC<Props> = ({
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState<boolean | null>(true);
   const [error, setError] = useState<string | null>(null);
+  const [imagen, setImage] = useState<string | null>(null);
+  const [openImage, setOpenImage] = useState<boolean | null>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,12 +102,18 @@ export const MainPage: React.FC<Props> = ({
             <S.StyledFilesWrapper>
               {data.archivos &&
                 data.archivos.map((item: string, index: any) => (
-                  <S.StyledImageWrapper>
+                  <S.StyledImageWrapper
+                    onClick={() => {
+                      setImage(item);
+                      setOpenImage(true);
+                    }}
+                    key={index}
+                  >
                     <S.StyledOptionsFileWrapper>
                       <>Foto {index}</>
                       <SlOptionsVertical />
                     </S.StyledOptionsFileWrapper>
-                    <S.StyledImage
+                    <S.StyledImagePreview
                       src={`http://localhost:5001/files${item}`}
                       alt="Imagen"
                       key={index}
@@ -113,6 +121,14 @@ export const MainPage: React.FC<Props> = ({
                   </S.StyledImageWrapper>
                 ))}
             </S.StyledFilesWrapper>
+            {openImage && (
+              <S.BackgroundDark>
+                <S.StyledImagePreview
+                  src={`http://localhost:5001/files${imagen}`}
+                  alt="Imagen"
+                />
+              </S.BackgroundDark>
+            )}
           </div>
         )}
       </div>

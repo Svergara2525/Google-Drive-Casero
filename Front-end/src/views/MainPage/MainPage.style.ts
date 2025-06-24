@@ -82,8 +82,29 @@ export const StyledImageWrapper = styled.div`
   justify-content: center;
 `;
 
-export const StyledImage = styled.img`
+export const StyledImagePreview = styled.img`
   widht: 100px;
   height: 100px;
   border-radius: 5px;
+`;
+
+export const StyledOpenImage = styled.img`
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+export const BackgroundDark = styled.div`
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
 `;
