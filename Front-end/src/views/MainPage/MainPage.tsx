@@ -5,6 +5,8 @@ import { Data } from "../../Models/data";
 import { FaFolder } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 
+import { CloseModalBar } from "../CloseModalBar";
+
 import * as S from "./MainPage.style";
 
 interface Props {
@@ -58,6 +60,8 @@ export const MainPage: React.FC<Props> = ({
     };
     fetchData();
   };
+
+  console.log(openImage);
 
   window.onpopstate = (event) => {
     if (event.state && event.state.data) {
@@ -123,7 +127,8 @@ export const MainPage: React.FC<Props> = ({
             </S.StyledFilesWrapper>
             {openImage && (
               <S.BackgroundDark>
-                <S.StyledImagePreview
+                <CloseModalBar setOpenModal={setOpenImage} />
+                <S.StyledOpenImage
                   src={`http://localhost:5001/files${imagen}`}
                   alt="Imagen"
                 />

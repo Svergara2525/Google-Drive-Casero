@@ -99,7 +99,7 @@ export const StyledOpenImage = styled.img`
 `;
 
 export const BackgroundDark = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.5);
   width: 100vw;
   height: 100vh;
   z-index: 0;
