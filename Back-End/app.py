@@ -82,8 +82,13 @@ def subir_archivo():
 @app.route('/files/<path:filepath>', methods=['GET'])
 def servir_archivo(filepath):
     full_path = os.path.abspath('/' + filepath)
-    print("El path del archivo a servir: ", full_path)
     return send_file(full_path)
+
+
+@app.route('/download_file/<path:filepath>', methods=['GET'])
+def download_file(filepath):
+    full_path = os.path.abspath('/' + filepath)
+    return send_file(full_path, as_attachment=True)
     
 
 @app.route('/crear_carpeta', methods=['POST'])

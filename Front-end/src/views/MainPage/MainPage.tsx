@@ -143,7 +143,7 @@ export const MainPage: React.FC<Props> = ({
           </S.StyledFilesWrapper>
           {openImage && (
             <S.BackgroundDark>
-              <CloseModalBar setOpenModal={setOpenImage} />
+              <CloseModalBar setOpenModal={setOpenImage} imagen={imagen} />
               {imageExtensions.includes(imagen?.extension ?? "") ? (
                 <S.StyledOpenImage
                   src={`http://localhost:5001/files${imagen?.file_path}`}
