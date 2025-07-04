@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { IoDocumentTextOutline } from "react-icons/io5";
 
 export const StyledMainPageWrapper = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ export const StyledButton = styled.button`
   align-items: center;
   border-radius: 10px;
   background-color: lightblue;
-  height: 4rem;
+  height: 3rem;
   width: 90%;
 `;
 
@@ -58,6 +59,14 @@ export const StyledFilesWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
+  width: 90%;
+`;
+
+export const StyledDataWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const StyledOptionsFileWrapper = styled.div`
@@ -68,7 +77,7 @@ export const StyledOptionsFileWrapper = styled.div`
   width: 90%;
 `;
 
-export const StyledImageWrapper = styled.div`
+export const StyledFileBox = styled.div`
   display: flex;
   border-radius: 10px;
   border-radius: 10px;
@@ -86,11 +95,12 @@ export const StyledImagePreview = styled.img`
   widht: 100px;
   height: 100px;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
 export const StyledOpenImage = styled.img`
-  max-width: 90vw;
-  max-height: 90vh;
+  width: 90vw;
+  height: 90vh;
   object-fit: contain;
   position: fixed;
   top: 50%;
@@ -107,4 +117,9 @@ export const BackgroundDark = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
+`;
+
+export const StyledFilePreview = styled(IoDocumentTextOutline)`
+  cursor: pointer;
+  font-size: 4rem;
 `;

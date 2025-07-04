@@ -1,11 +1,12 @@
 import { apiClient } from "../../infrastructure/apiClient";
 import { useState, useEffect } from "react";
+
+import { CloseModalBar } from "../CloseModalBar";
 import { Data } from "../../Models/data";
+import { file_atributes } from "../../Models/file_atributes";
 
 import { FaFolder } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
-
-import { CloseModalBar } from "../CloseModalBar";
 
 import * as S from "./MainPage.style";
 
@@ -23,8 +24,20 @@ export const MainPage: React.FC<Props> = ({
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState<boolean | null>(true);
   const [error, setError] = useState<string | null>(null);
-  const [imagen, setImage] = useState<string | null>(null);
+  const [imagen, setImage] = useState<file_atributes | null>(null);
   const [openImage, setOpenImage] = useState<boolean | null>(false);
+
+  const imageExtensions = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".HEIC",
+    ".bmp",
+    ".webp",
+    ".svg",
+  ];
+
+  const fileExtensions = [".pdf", ".docx", ".txt"];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,54 +102,65 @@ export const MainPage: React.FC<Props> = ({
           Subir archivo
         </S.StyledButton>
       </S.StyledButtonWrapper>
-      <div>
-        {loading && <S.StyledFolderWrapper>Cargando...</S.StyledFolderWrapper>}
-        {error && <S.StyledFolderWrapper>{error}</S.StyledFolderWrapper>}
-        {data && (
-          <div>
-            <S.StyledFolderWrapper>
-              {data.subcarpetas.map((item: string, index: any) => (
-                <S.StyledFolder key={index} onClick={() => handleClick(item)}>
-                  <FaFolder />
-                  {item}
-                  <SlOptionsVertical />
-                </S.StyledFolder>
-              ))}
-            </S.StyledFolderWrapper>
-            <S.StyledFilesWrapper>
-              {data.archivos &&
-                data.archivos.map((item: string, index: any) => (
-                  <S.StyledImageWrapper
-                    onClick={() => {
-                      setImage(item);
-                      setOpenImage(true);
-                    }}
-                    key={index}
-                  >
-                    <S.StyledOptionsFileWrapper>
-                      <>Foto {index}</>
-                      <SlOptionsVertical />
-                    </S.StyledOptionsFileWrapper>
+      {loading && <S.StyledFolderWrapper>Cargando...</S.StyledFolderWrapper>}
+      {error && <S.StyledFolderWrapper>{error}</S.StyledFolderWrapper>}
+      {data && (
+        <S.StyledDataWrapper>
+          <S.StyledFolderWrapper>
+            {data.subcarpetas.map((item: string, index: any) => (
+              <S.StyledFolder key={index} onClick={() => handleClick(item)}>
+                <FaFolder />
+                {item}
+                <SlOptionsVertical />
+              </S.StyledFolder>
+            ))}
+          </S.StyledFolderWrapper>
+          <S.StyledFilesWrapper>
+            {data.archivos &&
+              data.archivos.map((item: file_atributes, index: any) => (
+                <S.StyledFileBox
+                  onClick={() => {
+                    setImage(item);
+                    setOpenImage(true);
+                  }}
+                  key={index}
+                >
+                  <S.StyledOptionsFileWrapper>
+                    <>Foto {index}</>
+                    <SlOptionsVertical />
+                  </S.StyledOptionsFileWrapper>
+                  {imageExtensions.includes(item.extension) ? (
                     <S.StyledImagePreview
-                      src={`http://localhost:5001/files${item}`}
+                      src={`http://localhost:5001/files${item.file_path}`}
                       alt="Imagen"
                       key={index}
                     />
-                  </S.StyledImageWrapper>
-                ))}
-            </S.StyledFilesWrapper>
-            {openImage && (
-              <S.BackgroundDark>
-                <CloseModalBar setOpenModal={setOpenImage} />
+                  ) : fileExtensions.includes(item.extension) ? (
+                    <S.StyledFilePreview />
+                  ) : null}
+                </S.StyledFileBox>
+              ))}
+          </S.StyledFilesWrapper>
+          {openImage && (
+            <S.BackgroundDark>
+              <CloseModalBar setOpenModal={setOpenImage} />
+              {imageExtensions.includes(imagen?.extension ?? "") ? (
                 <S.StyledOpenImage
-                  src={`http://localhost:5001/files${imagen}`}
+                  src={`http://localhost:5001/files${imagen?.file_path}`}
                   alt="Imagen"
                 />
-              </S.BackgroundDark>
-            )}
-          </div>
-        )}
-      </div>
+              ) : fileExtensions.includes(imagen?.extension ?? "") ? (
+                <iframe
+                  src={`http://localhost:5001/files${imagen?.file_path}`}
+                  width="100%"
+                  height="100%"
+                  title="Archivo"
+                />
+              ) : null}
+            </S.BackgroundDark>
+          )}
+        </S.StyledDataWrapper>
+      )}
     </S.StyledMainPageWrapper>
   );
 };

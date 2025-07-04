@@ -23,7 +23,6 @@ CORS(app)
 swagger = Swagger(app, config=swagger_config, template=swagger_template)
 
 
-
 @app.route('/', methods=['GET'])
 @swag_from('swaggerDocs/conexion.yml')
 def conexion():
@@ -40,7 +39,6 @@ def navegar(directorio):
     print("El directorio a añadir: ", directorio)
     dir_path = os.path.join(os.path.expanduser("~"))
     dir_path = os.path.join(dir_path, directorio);
-    print("Estamos en el directorio: ", dir_path)
     if os.path.isdir(dir_path):
         subfolders = []
         files = []
@@ -48,8 +46,15 @@ def navegar(directorio):
             if entry.is_dir():
                 subfolders.append(entry.name)
             elif entry.is_file():
-                file_path = os.path.join(dir_path, entry.name)
-                files.append(file_path)
+                if not entry.name.startswith('.'):
+                    file_path = os.path.join(dir_path, entry.name)
+                    file_name, extension = os.path.splitext(os.path.basename(file_path))
+                    atributos = {
+                        "file_path": file_path,
+                        "file_name": file_name,
+                        "extension": extension
+                    }
+                    files.append(atributos)
         return jsonify({"subcarpetas": subfolders, "archivos": files}), 200
     else:
         subfolders = "No existe el subdirectorio"
@@ -61,7 +66,7 @@ def navegar(directorio):
 def subir_archivo():
     path = request.form.get('path')
     dir_path = os.path.join(os.path.expanduser("~"))
-    dir_path = os.path.join(dir_path, path);
+    dir_path = os.path.join(dir_path, path)
     print("Quiero subir archivos a este directorio: ", dir_path)
     if not request.files.getlist('file'):
         return jsonify({"mensaje": "No se ha enviado el archivo"}), 400
@@ -79,7 +84,6 @@ def servir_archivo(filepath):
     full_path = os.path.abspath('/' + filepath)
     print("El path del archivo a servir: ", full_path)
     return send_file(full_path)
-
     
 
 @app.route('/crear_carpeta', methods=['POST'])
@@ -90,7 +94,7 @@ def crear_carpeta():
         return jsonify({"mensaje": "No se ha proporcionado el nombre de la carpeta"}), 404
     print("El path de la carpeta a crear: ", path)
     dir_path = os.path.join(os.path.expanduser("~"))
-    dir_path = Path(os.path.join(dir_path, path));
+    dir_path = Path(os.path.join(dir_path, path))
     print("Quiero subir archivos a este directorio: ", dir_path)
     try:
         dir_path.mkdir(parents=True)
