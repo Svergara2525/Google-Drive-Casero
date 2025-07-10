@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { apiClient } from "../../infrastructure/apiClient";
+import { MdCloudUpload } from "react-icons/md";
 
 import * as S from "./Modal.style";
 
@@ -26,9 +27,6 @@ export const Modal: React.FC<Props> = ({
       setSelectedFiles(event.target.files);
     }
   };
-
-  console.log("variable file modal", showFileModal);
-  console.log("variable folder modal", showFolderModal);
 
   const handleUpload = () => {
     const formData = new FormData();
@@ -73,7 +71,27 @@ export const Modal: React.FC<Props> = ({
       <S.ModalWrapper>
         {showFileModal && (
           <div>
-            <input type="file" multiple onChange={handleFileChange} />
+            <S.StyledFileUploader>
+              <input
+                type="file"
+                id="file-upload"
+                multiple
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+              <label htmlFor="file-upload" style={{ cursor: "pointer" }}>
+                {selectedFiles === null ? (
+                  <MdCloudUpload color="#1475cf" size={60} />
+                ) : (
+                  <S.SelectedFileWrapper>
+                    <S.NumberOffFiles />
+                    <S.FileSelectText>
+                      {selectedFiles.length + " Archivos seleccionados"}
+                    </S.FileSelectText>
+                  </S.SelectedFileWrapper>
+                )}
+              </label>
+            </S.StyledFileUploader>
             <button onClick={handleUpload}>Subir archivo</button>
             <button
               onClick={() => {
