@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { apiClient } from "../../infrastructure/apiClient";
-import { MdCloudUpload } from "react-icons/md";
 
 import * as S from "./Modal.style";
 
@@ -70,7 +69,7 @@ export const Modal: React.FC<Props> = ({
     <S.BackgroundDark>
       <S.ModalWrapper>
         {showFileModal && (
-          <div>
+          <S.ModalOptionWrapper>
             <S.StyledFileUploader>
               <input
                 type="file"
@@ -81,10 +80,10 @@ export const Modal: React.FC<Props> = ({
               />
               <label htmlFor="file-upload" style={{ cursor: "pointer" }}>
                 {selectedFiles === null ? (
-                  <MdCloudUpload color="#1475cf" size={60} />
+                  <S.CloudUploadIcon />
                 ) : (
                   <S.SelectedFileWrapper>
-                    <S.NumberOffFiles />
+                    <S.FileIcon />
                     <S.FileSelectText>
                       {selectedFiles.length + " Archivos seleccionados"}
                     </S.FileSelectText>
@@ -92,37 +91,57 @@ export const Modal: React.FC<Props> = ({
                 )}
               </label>
             </S.StyledFileUploader>
-            <button onClick={handleUpload}>Subir archivo</button>
-            <button
-              onClick={() => {
-                setShowModal(false);
-                setShowFileModal(false);
-              }}
-            >
-              Cerrar
-            </button>
-          </div>
+            <S.ButtonsWrapper>
+              <S.StyledButton
+                disabled={!selectedFiles}
+                onClick={() => {
+                  handleUpload();
+                  setShowModal(false);
+                  setShowFileModal(false);
+                }}
+              >
+                Subir archivo
+              </S.StyledButton>
+              <S.StyledButton
+                onClick={() => {
+                  setShowModal(false);
+                  setShowFileModal(false);
+                }}
+              >
+                Cerrar
+              </S.StyledButton>
+            </S.ButtonsWrapper>
+          </S.ModalOptionWrapper>
         )}
 
         {showFolderModal && (
-          <div>
-            <button onClick={() => createFolder(folderName ?? "")}>
-              Crear carpeta
-            </button>
-            <input
+          <S.ModalOptionWrapper>
+            <S.StyledInputFolderName
               type="text"
               value={folderName ?? ""}
               onChange={handleFolderName}
             />
-            <button
-              onClick={() => {
-                setShowModal(false);
-                setShowFolderModal(false);
-              }}
-            >
-              Cerrar
-            </button>
-          </div>
+            <S.ButtonsWrapper>
+              <S.StyledButton
+                disabled={!folderName}
+                onClick={() => {
+                  createFolder(folderName ?? "");
+                  setShowModal(false);
+                  setShowFolderModal(false);
+                }}
+              >
+                Crear carpeta
+              </S.StyledButton>
+              <S.StyledButton
+                onClick={() => {
+                  setShowModal(false);
+                  setShowFolderModal(false);
+                }}
+              >
+                Cerrar
+              </S.StyledButton>
+            </S.ButtonsWrapper>
+          </S.ModalOptionWrapper>
         )}
       </S.ModalWrapper>
     </S.BackgroundDark>

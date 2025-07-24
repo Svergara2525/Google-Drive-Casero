@@ -31,7 +31,7 @@ export const MainPage: React.FC<Props> = ({
     ".jpg",
     ".jpeg",
     ".png",
-    ".HEIC",
+    ".heic",
     ".bmp",
     ".webp",
     ".svg",
@@ -126,16 +126,16 @@ export const MainPage: React.FC<Props> = ({
                   key={index}
                 >
                   <S.StyledOptionsFileWrapper>
-                    <>Foto {index}</>
+                    <S.FileNameContainer>{item.file_name}</S.FileNameContainer>
                     <SlOptionsVertical />
                   </S.StyledOptionsFileWrapper>
-                  {imageExtensions.includes(item.extension) ? (
+                  {imageExtensions.includes(item.extension.toLowerCase()) ? (
                     <S.StyledImagePreview
                       src={`http://localhost:5001/files${item.file_path}`}
                       alt="Imagen"
                       key={index}
                     />
-                  ) : fileExtensions.includes(item.extension) ? (
+                  ) : fileExtensions.includes(item.extension.toLowerCase()) ? (
                     <S.StyledFilePreview />
                   ) : null}
                 </S.StyledFileBox>
@@ -144,12 +144,16 @@ export const MainPage: React.FC<Props> = ({
           {openImage && (
             <S.BackgroundDark>
               <CloseModalBar setOpenModal={setOpenImage} imagen={imagen} />
-              {imageExtensions.includes(imagen?.extension ?? "") ? (
+              {imageExtensions.includes(
+                (imagen?.extension ?? "").toLowerCase()
+              ) ? (
                 <S.StyledOpenImage
                   src={`http://localhost:5001/files${imagen?.file_path}`}
                   alt="Imagen"
                 />
-              ) : fileExtensions.includes(imagen?.extension ?? "") ? (
+              ) : fileExtensions.includes(
+                  (imagen?.extension ?? "").toLowerCase()
+                ) ? (
                 <iframe
                   src={`http://localhost:5001/files${imagen?.file_path}`}
                   width="100%"

@@ -58,6 +58,8 @@ export const StyledFilesWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
   width: 90%;
 `;
@@ -67,6 +69,7 @@ export const StyledDataWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 `;
 
 export const StyledOptionsFileWrapper = styled.div`
@@ -122,4 +125,11 @@ export const BackgroundDark = styled.div`
 export const StyledFilePreview = styled(IoDocumentTextOutline)`
   cursor: pointer;
   font-size: 4rem;
+`;
+
+export const FileNameContainer = styled.div`
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 `;
