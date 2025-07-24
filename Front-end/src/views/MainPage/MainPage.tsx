@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { CloseModalBar } from "../CloseModalBar";
 import { Data } from "../../Models/data";
 import { file_atributes } from "../../Models/file_atributes";
+import { Modal } from "../Modal";
 
 import { FaFolder } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
@@ -11,12 +12,18 @@ import { SlOptionsVertical } from "react-icons/sl";
 import * as S from "./MainPage.style";
 
 interface Props {
+  showModal: boolean | null;
+  showFileModal: boolean | null;
+  showFolderModal: boolean | null;
   setShowModal: (valor: boolean | null) => void;
   setShowFileModal: (valor: boolean | null) => void;
   setShowFolderModal: (valor: boolean | null) => void;
 }
 
 export const MainPage: React.FC<Props> = ({
+  showModal,
+  showFileModal,
+  showFolderModal,
   setShowModal,
   setShowFileModal,
   setShowFolderModal,
@@ -164,6 +171,15 @@ export const MainPage: React.FC<Props> = ({
             </S.BackgroundDark>
           )}
         </S.StyledDataWrapper>
+      )}
+      {showModal && (
+        <Modal
+          setShowModal={setShowModal}
+          setShowFileModal={setShowFileModal}
+          setShowFolderModal={setShowFolderModal}
+          showFileModal={showFileModal}
+          showFolderModal={showFolderModal}
+        ></Modal>
       )}
     </S.StyledMainPageWrapper>
   );
