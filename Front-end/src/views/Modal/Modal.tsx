@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { apiClient } from "../../infrastructure/apiClient";
 
 import * as S from "./Modal.style";
@@ -20,6 +20,7 @@ export const Modal: React.FC<Props> = ({
 }) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [folderName, setFolderlName] = useState<string | null>(null);
+  const clickModal = useRef(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -65,9 +66,22 @@ export const Modal: React.FC<Props> = ({
     setFolderlName(event.target.value);
   };
 
+  const handleClickModal = () => {
+    if (!clickModal.current) {
+      setShowModal(false);
+      setShowFileModal(false);
+      setShowFolderModal(false);
+    }
+    clickModal.current = false;
+  };
+
   return (
-    <S.BackgroundDark>
-      <S.ModalWrapper>
+    <S.BackgroundDark onClick={() => handleClickModal()}>
+      <S.ModalWrapper
+        onClick={() => {
+          clickModal.current = true;
+        }}
+      >
         {showFileModal && (
           <S.ModalOptionWrapper>
             <S.StyledFileUploader>

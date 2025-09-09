@@ -81,8 +81,6 @@ export const MainPage: React.FC<Props> = ({
     fetchData();
   };
 
-  console.log(openImage);
-
   window.onpopstate = (event) => {
     if (event.state && event.state.data) {
       setData(event.state.data);
