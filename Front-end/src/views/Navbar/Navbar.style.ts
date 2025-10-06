@@ -5,6 +5,6 @@ export const StyledNavbar = styled.div`
   justify-content: center;
   align-items: center;
   background-color: lightblue;
-  height: 4rem;
+  height: 10%;
   gap: 10px;
 `;

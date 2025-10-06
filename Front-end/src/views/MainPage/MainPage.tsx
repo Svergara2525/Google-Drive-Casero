@@ -1,5 +1,5 @@
 import { apiClient } from "../../infrastructure/apiClient";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { CloseModalBar } from "../CloseModalBar";
 import { Data } from "../../Models/data";
@@ -33,6 +33,7 @@ export const MainPage: React.FC<Props> = ({
   const [error, setError] = useState<string | null>(null);
   const [imagen, setImage] = useState<file_atributes | null>(null);
   const [openImage, setOpenImage] = useState<boolean | null>(false);
+  const clickFile = useRef(false);
 
   const imageExtensions = [
     ".jpg",
@@ -85,6 +86,15 @@ export const MainPage: React.FC<Props> = ({
     if (event.state && event.state.data) {
       setData(event.state.data);
     }
+  };
+
+  const handleClickFile = () => {
+    console.log("Handle clickFile", clickFile.current);
+    if (!clickFile.current) {
+      console.log("Entramos al if con", clickFile.current);
+      setOpenImage(false);
+    }
+    clickFile.current = false;
   };
 
   return (
@@ -147,12 +157,16 @@ export const MainPage: React.FC<Props> = ({
               ))}
           </S.StyledFilesWrapper>
           {openImage && (
-            <S.BackgroundDark>
+            <S.BackgroundDark onClick={() => handleClickFile()}>
               <CloseModalBar setOpenModal={setOpenImage} imagen={imagen} />
               {imageExtensions.includes(
                 (imagen?.extension ?? "").toLowerCase()
               ) ? (
                 <S.StyledOpenImage
+                  onClick={() => {
+                    (clickFile.current = true),
+                      console.log("clickFle", clickFile.current);
+                  }}
                   src={`http://localhost:5001/files${imagen?.file_path}`}
                   alt="Imagen"
                 />

@@ -4,9 +4,9 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 export const StyledMainPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
   justify-content: center;
   align-items: center;
+  height: 90%;
 `;
 
 export const StyledButtonWrapper = styled.div`
@@ -14,20 +14,9 @@ export const StyledButtonWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 25vh;
+  height: 30%;
   width: 100%;
   gap: 10px;
-`;
-
-export const StyledFolderWrapper = styled.div`
-  display: flex;
-  cursor: pointer;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  max-width: 90%;
 `;
 
 export const StyledButton = styled.button`
@@ -54,6 +43,16 @@ export const StyledFolder = styled.div`
   gap: 10px;
 `;
 
+export const StyledDataWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  gap: 15px;
+  width: 98%;
+`;
+
 export const StyledFilesWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -62,14 +61,21 @@ export const StyledFilesWrapper = styled.div`
   align-items: center;
   gap: 20px;
   width: 90%;
+  height: 70%;
+  overflow-y: auto;
 `;
 
-export const StyledDataWrapper = styled.div`
+export const StyledFolderWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  cursor: pointer;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
+  overflow-y: auto;
+  width: 90%;
+  height: 30%;
 `;
 
 export const StyledOptionsFileWrapper = styled.div`
@@ -102,24 +108,23 @@ export const StyledImagePreview = styled.img`
 `;
 
 export const StyledOpenImage = styled.img`
-  width: 90vw;
-  height: 90vh;
+  max-width: 90%;
+  max-height: 90%;
   object-fit: contain;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: inline-block;
 `;
 
 export const BackgroundDark = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   width: 100vw;
   height: 100vh;
-  z-index: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
 `;
 
 export const StyledFilePreview = styled(IoDocumentTextOutline)`
