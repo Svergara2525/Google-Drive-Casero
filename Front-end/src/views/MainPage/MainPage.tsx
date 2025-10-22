@@ -5,6 +5,7 @@ import { CloseModalBar } from "../CloseModalBar";
 import { Data } from "../../Models/data";
 import { file_atributes } from "../../Models/file_atributes";
 import { Modal } from "../Modal";
+import { Buttons } from "./Buttons";
 
 import { FaFolder } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
@@ -99,37 +100,26 @@ export const MainPage: React.FC<Props> = ({
 
   return (
     <S.StyledMainPageWrapper>
-      <S.StyledButtonWrapper>
-        <S.StyledButton
-          onClick={() => {
-            setShowModal(true);
-            setShowFolderModal(true);
-          }}
-        >
-          Crear carpeta
-        </S.StyledButton>
-        <S.StyledButton
-          onClick={() => {
-            setShowModal(true);
-            setShowFileModal(true);
-          }}
-        >
-          Subir archivo
-        </S.StyledButton>
-      </S.StyledButtonWrapper>
+      <Buttons
+        setShowFolderModal={setShowFolderModal}
+        setShowFileModal={setShowFileModal}
+        setShowModal={setShowModal}
+      ></Buttons>
       {loading && <S.StyledFolderWrapper>Cargando...</S.StyledFolderWrapper>}
       {error && <S.StyledFolderWrapper>{error}</S.StyledFolderWrapper>}
       {data && (
         <S.StyledDataWrapper>
-          <S.StyledFolderWrapper>
-            {data.subcarpetas.map((item: string, index: any) => (
-              <S.StyledFolder key={index} onClick={() => handleClick(item)}>
-                <FaFolder />
-                {item}
-                <SlOptionsVertical />
-              </S.StyledFolder>
-            ))}
-          </S.StyledFolderWrapper>
+          {data.subcarpetas.length !== 0 && (
+            <S.StyledFolderWrapper>
+              {data.subcarpetas.map((item: string, index: any) => (
+                <S.StyledFolder key={index} onClick={() => handleClick(item)}>
+                  <FaFolder />
+                  {item}
+                  <SlOptionsVertical />
+                </S.StyledFolder>
+              ))}
+            </S.StyledFolderWrapper>
+          )}
           <S.StyledFilesWrapper>
             {data.archivos &&
               data.archivos.map((item: file_atributes, index: any) => (

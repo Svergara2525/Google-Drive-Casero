@@ -9,26 +9,6 @@ export const StyledMainPageWrapper = styled.div`
   height: 90%;
 `;
 
-export const StyledButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 30%;
-  width: 100%;
-  gap: 10px;
-`;
-
-export const StyledButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  background-color: lightblue;
-  height: 3rem;
-  width: 90%;
-`;
-
 export const StyledFolder = styled.div`
   display: flex;
   justify-content: space-between;
@@ -48,7 +28,7 @@ export const StyledDataWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70%;
+  height: 80%;
   gap: 15px;
   width: 98%;
 `;
@@ -63,6 +43,7 @@ export const StyledFilesWrapper = styled.div`
   width: 90%;
   height: 70%;
   overflow-y: auto;
+  border: 10px solid red;
 `;
 
 export const StyledFolderWrapper = styled.div`
@@ -76,6 +57,7 @@ export const StyledFolderWrapper = styled.div`
   overflow-y: auto;
   width: 90%;
   height: 30%;
+  border: 10px solid black;
 `;
 
 export const StyledOptionsFileWrapper = styled.div`
