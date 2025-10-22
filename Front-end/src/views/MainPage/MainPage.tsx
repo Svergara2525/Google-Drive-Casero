@@ -6,8 +6,8 @@ import { Data } from "../../Models/data";
 import { file_atributes } from "../../Models/file_atributes";
 import { Modal } from "../Modal";
 import { Buttons } from "./Buttons";
+import { FoldersData } from "./FoldersData";
 
-import { FaFolder } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 
 import * as S from "./MainPage.style";
@@ -64,25 +64,6 @@ export const MainPage: React.FC<Props> = ({
     fetchData();
   }, []);
 
-  const handleClick = (item: string) => {
-    const fetchData = async () => {
-      try {
-        console.log(window.location.pathname);
-        const nuevaURL =
-          window.location.pathname === "/"
-            ? `/${item}`
-            : `${window.location.pathname}/${item}`;
-        const response = await apiClient.folderSelect(nuevaURL);
-        history.pushState({ data: response }, "", nuevaURL);
-        setData(response);
-      } catch (error) {
-        console.log(error);
-        setError("Error al cargar los datos");
-      }
-    };
-    fetchData();
-  };
-
   window.onpopstate = (event) => {
     if (event.state && event.state.data) {
       setData(event.state.data);
@@ -105,20 +86,12 @@ export const MainPage: React.FC<Props> = ({
         setShowFileModal={setShowFileModal}
         setShowModal={setShowModal}
       ></Buttons>
-      {loading && <S.StyledFolderWrapper>Cargando...</S.StyledFolderWrapper>}
-      {error && <S.StyledFolderWrapper>{error}</S.StyledFolderWrapper>}
+      {loading && <S.StyledDataWrapper>Cargando...</S.StyledDataWrapper>}
+      {error && <S.StyledDataWrapper>{error}</S.StyledDataWrapper>}
       {data && (
         <S.StyledDataWrapper>
           {data.subcarpetas.length !== 0 && (
-            <S.StyledFolderWrapper>
-              {data.subcarpetas.map((item: string, index: any) => (
-                <S.StyledFolder key={index} onClick={() => handleClick(item)}>
-                  <FaFolder />
-                  {item}
-                  <SlOptionsVertical />
-                </S.StyledFolder>
-              ))}
-            </S.StyledFolderWrapper>
+            <FoldersData setData={setData} setError={setError} data={data} />
           )}
           <S.StyledFilesWrapper>
             {data.archivos &&
