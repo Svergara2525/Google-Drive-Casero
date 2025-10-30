@@ -1,9 +1,9 @@
 import * as S from "./FoldersData.style";
 import { FaFolder } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
-import { apiClient } from "../../../infrastructure/apiClient";
+import { apiClient } from "../../../../infrastructure/apiClient";
 
-import { Data } from "../../../Models/data";
+import { Data } from "../../../../Models/data";
 
 interface Props {
   setData: (valor: Data | null) => void;

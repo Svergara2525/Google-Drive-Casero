@@ -1,14 +1,13 @@
 import { apiClient } from "../../infrastructure/apiClient";
 import { useState, useEffect, useRef } from "react";
 
-import { CloseModalBar } from "../CloseModalBar";
 import { Data } from "../../Models/data";
 import { file_atributes } from "../../Models/file_atributes";
 import { Modal } from "../Modal";
-import { Buttons } from "./Buttons";
-import { FoldersData } from "./FoldersData";
-
-import { SlOptionsVertical } from "react-icons/sl";
+import { Buttons } from "./_components/Buttons";
+import { FoldersData } from "./_components/FoldersData";
+import { FilesData } from "./_components/FilesData";
+import { OpenFileModal } from "./_components/OpenFileModal";
 
 import * as S from "./MainPage.style";
 
@@ -70,15 +69,6 @@ export const MainPage: React.FC<Props> = ({
     }
   };
 
-  const handleClickFile = () => {
-    console.log("Handle clickFile", clickFile.current);
-    if (!clickFile.current) {
-      console.log("Entramos al if con", clickFile.current);
-      setOpenImage(false);
-    }
-    clickFile.current = false;
-  };
-
   return (
     <S.StyledMainPageWrapper>
       <Buttons
@@ -93,57 +83,21 @@ export const MainPage: React.FC<Props> = ({
           {data.subcarpetas.length !== 0 && (
             <FoldersData setData={setData} setError={setError} data={data} />
           )}
-          <S.StyledFilesWrapper>
-            {data.archivos &&
-              data.archivos.map((item: file_atributes, index: any) => (
-                <S.StyledFileBox
-                  onClick={() => {
-                    setImage(item);
-                    setOpenImage(true);
-                  }}
-                  key={index}
-                >
-                  <S.StyledOptionsFileWrapper>
-                    <S.FileNameContainer>{item.file_name}</S.FileNameContainer>
-                    <SlOptionsVertical />
-                  </S.StyledOptionsFileWrapper>
-                  {imageExtensions.includes(item.extension.toLowerCase()) ? (
-                    <S.StyledImagePreview
-                      src={`http://localhost:5001/files${item.file_path}`}
-                      alt="Imagen"
-                      key={index}
-                    />
-                  ) : fileExtensions.includes(item.extension.toLowerCase()) ? (
-                    <S.StyledFilePreview />
-                  ) : null}
-                </S.StyledFileBox>
-              ))}
-          </S.StyledFilesWrapper>
+          <FilesData
+            data={data}
+            setImage={setImage}
+            setOpenImage={setOpenImage}
+            imageExtensions={imageExtensions}
+            fileExtensions={fileExtensions}
+          />
           {openImage && (
-            <S.BackgroundDark onClick={() => handleClickFile()}>
-              <CloseModalBar setOpenModal={setOpenImage} imagen={imagen} />
-              {imageExtensions.includes(
-                (imagen?.extension ?? "").toLowerCase()
-              ) ? (
-                <S.StyledOpenImage
-                  onClick={() => {
-                    (clickFile.current = true),
-                      console.log("clickFle", clickFile.current);
-                  }}
-                  src={`http://localhost:5001/files${imagen?.file_path}`}
-                  alt="Imagen"
-                />
-              ) : fileExtensions.includes(
-                  (imagen?.extension ?? "").toLowerCase()
-                ) ? (
-                <iframe
-                  src={`http://localhost:5001/files${imagen?.file_path}`}
-                  width="100%"
-                  height="100%"
-                  title="Archivo"
-                />
-              ) : null}
-            </S.BackgroundDark>
+            <OpenFileModal
+              clickFile={clickFile}
+              setOpenImage={setOpenImage}
+              imagen={imagen}
+              imageExtensions={imageExtensions}
+              fileExtensions={fileExtensions}
+            />
           )}
         </S.StyledDataWrapper>
       )}
