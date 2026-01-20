@@ -33,6 +33,8 @@ export const MainPage: React.FC<Props> = ({
   const [error, setError] = useState<string | null>(null);
   const [imagen, setImage] = useState<file_atributes | null>(null);
   const [openImage, setOpenImage] = useState<boolean | null>(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadedFolder, setUploadedFoler] = useState<string | null>(null);
   const clickFile = useRef(false);
 
   const imageExtensions = [
@@ -47,11 +49,14 @@ export const MainPage: React.FC<Props> = ({
 
   const fileExtensions = [".pdf", ".docx", ".txt"];
 
+  console.log("Probando inspector");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient.getFWS();
-        history.pushState({ data: response }, "", "/");
+        const currentPath = window.location.pathname;
+        const response = await apiClient.folderSelect(currentPath);
+        history.pushState({ data: response }, "", currentPath);
         setData(response);
       } catch (error) {
         console.log(error);
@@ -61,7 +66,7 @@ export const MainPage: React.FC<Props> = ({
       }
     };
     fetchData();
-  }, []);
+  }, [uploadedFile, uploadedFolder]);
 
   window.onpopstate = (event) => {
     if (event.state && event.state.data) {
@@ -108,6 +113,8 @@ export const MainPage: React.FC<Props> = ({
           setShowFolderModal={setShowFolderModal}
           showFileModal={showFileModal}
           showFolderModal={showFolderModal}
+          setUploadedFile={setUploadedFile}
+          setUploadedFolder={setUploadedFoler}
         ></Modal>
       )}
     </S.StyledMainPageWrapper>

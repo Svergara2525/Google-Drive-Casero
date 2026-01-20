@@ -19,9 +19,7 @@ export const OpenFileModal: React.FC<Props> = ({
   fileExtensions,
 }) => {
   const handleClickFile = () => {
-    console.log("Handle clickFile", clickFile.current);
     if (!clickFile.current) {
-      console.log("Entramos al if con", clickFile.current);
       setOpenImage(false);
     }
     clickFile.current = false;
@@ -32,8 +30,7 @@ export const OpenFileModal: React.FC<Props> = ({
       {imageExtensions.includes((imagen?.extension ?? "").toLowerCase()) ? (
         <S.StyledOpenImage
           onClick={() => {
-            (clickFile.current = true),
-              console.log("clickFle", clickFile.current);
+            clickFile.current = true;
           }}
           src={`http://localhost:5001/files${imagen?.file_path}`}
           alt="Imagen"
