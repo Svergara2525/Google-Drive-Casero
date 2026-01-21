@@ -35,6 +35,7 @@ export const MainPage: React.FC<Props> = ({
   const [openImage, setOpenImage] = useState<boolean | null>(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadedFolder, setUploadedFoler] = useState<string | null>(null);
+  const [fileEditModal, setFileEditModal] = useState<boolean | null>(false);
   const clickFile = useRef(false);
 
   const imageExtensions = [
@@ -94,6 +95,8 @@ export const MainPage: React.FC<Props> = ({
             setOpenImage={setOpenImage}
             imageExtensions={imageExtensions}
             fileExtensions={fileExtensions}
+            setEditFileModal={setFileEditModal}
+            fileEditModal={fileEditModal}
           />
           {openImage && (
             <OpenFileModal

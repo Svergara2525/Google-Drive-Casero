@@ -34,17 +34,19 @@ export const StyledOptionsFileWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 90%;
+  gap: 10px;
 `;
 
 export const FileNameContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  white-space: nowrap;
+  max-width: calc(100% - 30px);
+  flex-shrink: 1;
 `;
 
 export const StyledImagePreview = styled.img`
-  widht: 100px;
   height: 100px;
   border-radius: 5px;
   cursor: pointer;

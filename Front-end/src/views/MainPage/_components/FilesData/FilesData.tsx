@@ -11,6 +11,8 @@ interface Props {
   setOpenImage: (valor: boolean | null) => void;
   imageExtensions: string[];
   fileExtensions: string[];
+  setEditFileModal: (valor: boolean | null) => void;
+  fileEditModal: boolean | null;
 }
 
 export const FilesData: React.FC<Props> = ({
@@ -19,6 +21,7 @@ export const FilesData: React.FC<Props> = ({
   setOpenImage,
   imageExtensions,
   fileExtensions,
+  setEditFileModal,
 }) => {
   return (
     <S.StyledFilesWrapper>
@@ -33,7 +36,12 @@ export const FilesData: React.FC<Props> = ({
           >
             <S.StyledOptionsFileWrapper>
               <S.FileNameContainer>{item.file_name}</S.FileNameContainer>
-              <SlOptionsVertical />
+              <SlOptionsVertical
+                onClick={() => {
+                  setEditFileModal(true);
+                  console.log("click en opciones");
+                }}
+              />
             </S.StyledOptionsFileWrapper>
             {imageExtensions.includes(item.extension.toLowerCase()) ? (
               <S.StyledImagePreview
