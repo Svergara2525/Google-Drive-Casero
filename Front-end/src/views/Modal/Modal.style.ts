@@ -3,8 +3,8 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { MdCloudUpload } from "react-icons/md";
 
 export const ModalWrapper = styled.div`
-  width: 500px;
-  height: 300px;
+  width: 40%;
+  height: 50%;
   background: white;
   color: white;
   z-index: 10;
@@ -17,11 +17,11 @@ export const ModalWrapper = styled.div`
 `;
 
 export const ButtonsWrapper = styled.div`
+  gap: 10px;
   display: flex;
 `;
 
 export const StyledButton = styled.button`
-  height: 20px;
   width: 100px;
 `;
 
@@ -31,8 +31,8 @@ export const StyledFileUploader = styled.div`
   justify-content: center;
   align-items: center;
   border: 2px dashed #1475cf;
-  height: 200px;
-  width: 400px;
+  height: 50%;
+  width: 60%;
   cursor: pointer;
   border-radius: 5px;
 `;
@@ -81,8 +81,19 @@ export const BackgroundDark = styled.div`
 `;
 
 export const StyledInputFolderName = styled.input`
-  width: 400px;
-  height: 20px;
-  border-radius: 4px;
-  background-color: #f0f0f0;
+  border: 2px solid transparent;
+  width: 25em;
+  height: 2.5em;
+  padding-left: 0.8em;
+  outline: none;
+  overflow: hidden;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  transition: all 0.5s;
+  &:hover,
+  &:focus {
+    border: 2px solid #4a9dec;
+    box-shadow: 0px 0px 0px 7px rgba(74, 157, 236, 0.2);
+    background-color: white;
+  }
 `;

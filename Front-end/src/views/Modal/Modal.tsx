@@ -55,7 +55,7 @@ export const Modal: React.FC<Props> = ({
     const formData = new FormData();
     formData.append(
       "path",
-      window.location.pathname.replace(/^\/+/, "") + "/" + folderName
+      window.location.pathname.replace(/^\/+/, "") + "/" + folderName,
     );
     const fetchData = async () => {
       try {
@@ -137,6 +137,7 @@ export const Modal: React.FC<Props> = ({
         {showFolderModal && (
           <S.ModalOptionWrapper>
             <S.StyledInputFolderName
+              placeholder="Introduce el nombre de la carpeta"
               type="text"
               value={folderName ?? ""}
               onChange={handleFolderName}
