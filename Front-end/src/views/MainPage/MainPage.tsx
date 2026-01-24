@@ -35,7 +35,7 @@ export const MainPage: React.FC<Props> = ({
   const [openImage, setOpenImage] = useState<boolean | null>(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadedFolder, setUploadedFoler] = useState<string | null>(null);
-  const [fileEditModal, setFileEditModal] = useState<boolean | null>(false);
+  const optionMenu = useRef(false);
   const clickFile = useRef(false);
 
   const imageExtensions = [
@@ -49,8 +49,6 @@ export const MainPage: React.FC<Props> = ({
   ];
 
   const fileExtensions = [".pdf", ".docx", ".txt"];
-
-  console.log("Probando inspector");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,6 +73,9 @@ export const MainPage: React.FC<Props> = ({
     }
   };
 
+  console.log("Option menu ref in MainPage:", optionMenu.current);
+  console.log("Open image state in MainPage:", openImage);
+
   return (
     <S.StyledMainPageWrapper>
       <Buttons
@@ -95,10 +96,9 @@ export const MainPage: React.FC<Props> = ({
             setOpenImage={setOpenImage}
             imageExtensions={imageExtensions}
             fileExtensions={fileExtensions}
-            setEditFileModal={setFileEditModal}
-            fileEditModal={fileEditModal}
+            optionMenu={optionMenu}
           />
-          {openImage && (
+          {openImage && !optionMenu.current && (
             <OpenFileModal
               clickFile={clickFile}
               setOpenImage={setOpenImage}

@@ -1,7 +1,9 @@
+import { useState } from "react";
+import { SlOptionsVertical } from "react-icons/sl";
+
 import { Data } from "../../../../Models/data";
 import { file_atributes } from "../../../../Models/file_atributes";
-
-import { SlOptionsVertical } from "react-icons/sl";
+import { ContextMenu } from "../../../ContextMenu";
 
 import * as S from "./FilesData.style";
 
@@ -11,8 +13,7 @@ interface Props {
   setOpenImage: (valor: boolean | null) => void;
   imageExtensions: string[];
   fileExtensions: string[];
-  setEditFileModal: (valor: boolean | null) => void;
-  fileEditModal: boolean | null;
+  optionMenu: React.MutableRefObject<boolean>;
 }
 
 export const FilesData: React.FC<Props> = ({
@@ -21,27 +22,37 @@ export const FilesData: React.FC<Props> = ({
   setOpenImage,
   imageExtensions,
   fileExtensions,
-  setEditFileModal,
+  optionMenu,
 }) => {
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+
   return (
     <S.StyledFilesWrapper>
       {data?.archivos &&
         data.archivos.map((item: file_atributes, index: any) => (
           <S.StyledFileBox
             onClick={() => {
-              setImage(item);
-              setOpenImage(true);
+              if (!optionMenu.current) {
+                setImage(item);
+                setOpenImage(true);
+              }
             }}
             key={index}
           >
             <S.StyledOptionsFileWrapper>
               <S.FileNameContainer>{item.file_name}</S.FileNameContainer>
-              <SlOptionsVertical
-                onClick={() => {
-                  setEditFileModal(true);
-                  console.log("click en opciones");
+              <ContextMenu
+                opened={selectedFile === item.file_name}
+                onChange={(opened) => {
+                  setSelectedFile(opened ? item.file_name : null);
+                  optionMenu.current = opened ? true : false;
                 }}
-              />
+              >
+                <SlOptionsVertical
+                  style={{ cursor: "pointer" }}
+                  onClick={() => console.log("Options clicked")}
+                />
+              </ContextMenu>
             </S.StyledOptionsFileWrapper>
             {imageExtensions.includes(item.extension.toLowerCase()) ? (
               <S.StyledImagePreview

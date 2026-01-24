@@ -1,0 +1,31 @@
+---
+tags:
+  - Archivos
+summary: Eliminar archivo
+description: Elimina un archivo indicado por su ruta. La ruta puede ser relativa al directorio Home del usuario o absoluta.
+consumes:
+  - application/x-www-form-urlencoded
+produces:
+  - application/json
+parameters:
+  - name: path
+    in: formData
+    type: string
+    required: true
+    description: Ruta del archivo a eliminar.
+responses:
+  200:
+    description: Archivo eliminado correctamente
+    examples:
+      application/json:
+        mensaje: Archivo eliminado correctamente
+  400:
+    description: No se ha proporcionado el nombre del archivo
+    examples:
+      application/json:
+        mensaje: No se ha proporcionado el nombre del archivo
+  500:
+    description: Error al eliminar el archivo
+    examples:
+      application/json:
+        mensaje: Error al eliminar el archivo
