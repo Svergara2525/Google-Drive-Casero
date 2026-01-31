@@ -121,7 +121,7 @@ def crear_carpeta():
 @swag_from('swaggerDocs/eliminar_archivo.yml')
 def eliminar_archivo():
     try:
-        path = request.form.get('path')
+        path = request.get_json().get('path')
         if not path:
             return jsonify({"mensaje": "No se ha proporcionado el nombre del archivo"}), 400
         os.remove(path)
@@ -134,7 +134,7 @@ def eliminar_archivo():
 @swag_from('swaggerDocs/eliminar_carpeta.yml')
 def eliminar_carpeta():
     try:
-        path = request.form.get('path')
+        path = request.get_json().get('path')
         if not path:
             return jsonify({"mensaje": "No se ha proporcionado el nombre de la carpeta"}), 400
         shutil.rmtree(path)

@@ -1,4 +1,5 @@
 import { Menu } from "@mantine/core";
+import { apiClient } from "../../infrastructure/apiClient";
 
 interface Props {
   children: React.ReactNode;
@@ -11,14 +12,22 @@ export const ContextMenu: React.FC<Props> = ({
   opened,
   onChange,
 }) => {
+  const deleteFile = () => {
+    
+  };
+
+  const downloadFile = () => {};
+
+  const renameFile = () => {};
+
   return (
     <Menu opened={opened} onChange={onChange}>
       <Menu.Target>{children}</Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Opciones</Menu.Label>
-        <Menu.Item>Borrar Archivo</Menu.Item>
-        <Menu.Item>Descargar Archivo</Menu.Item>
-        <Menu.Item>Cambiar Nombre</Menu.Item>
+        <Menu.Item onClick={() => deleteFile()}>Borrar Archivo</Menu.Item>
+        <Menu.Item onClick={() => downloadFile()}>Descargar Archivo</Menu.Item>
+        <Menu.Item onClick={() => renameFile()}>Cambiar Nombre</Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );

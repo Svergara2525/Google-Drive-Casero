@@ -8,19 +8,15 @@ export const apiClient = (() => {
       axios.get(conexion + folderSelect).then((response) => response.data),
     uploadFile: (formData: FormData) =>
       axios
-        .post(conexion + "/subir_archivo", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post(conexion + "/subir_archivo", formData)
         .then((response) => response.data),
     createFolder: (formData: FormData) =>
       axios
-        .post(conexion + "/crear_carpeta", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post(conexion + "/crear_carpeta", formData)
+        .then((response) => response.data),
+    deleteFile: (filePath: string) =>
+      axios
+        .post(conexion + "/eliminar_archivo", { path: filePath })
         .then((response) => response.data),
   };
 })();

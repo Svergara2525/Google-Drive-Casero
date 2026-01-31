@@ -88,7 +88,12 @@ export const MainPage: React.FC<Props> = ({
       {data && (
         <S.StyledDataWrapper>
           {data.subcarpetas.length !== 0 && (
-            <FoldersData setData={setData} setError={setError} data={data} />
+            <FoldersData
+              setData={setData}
+              setError={setError}
+              data={data}
+              optionMenu={optionMenu}
+            />
           )}
           <FilesData
             data={data}

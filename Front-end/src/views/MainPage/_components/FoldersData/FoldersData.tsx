@@ -1,17 +1,29 @@
-import * as S from "./FoldersData.style";
+import { useState } from "react";
+
 import { FaFolder } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 import { apiClient } from "../../../../infrastructure/apiClient";
 
 import { Data } from "../../../../Models/data";
+import { ContextMenu } from "../../../ContextMenu";
+
+import * as S from "./FoldersData.style";
 
 interface Props {
   setData: (valor: Data | null) => void;
   setError: (valor: string | null) => void;
   data: Data | null;
+  optionMenu: React.MutableRefObject<boolean>;
 }
 
-export const FoldersData: React.FC<Props> = ({ setData, setError, data }) => {
+export const FoldersData: React.FC<Props> = ({
+  setData,
+  setError,
+  data,
+  optionMenu,
+}) => {
+  const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
+
   const handleClick = (item: string) => {
     const fetchData = async () => {
       try {
@@ -28,16 +40,32 @@ export const FoldersData: React.FC<Props> = ({ setData, setError, data }) => {
         setError("Error al cargar los datos");
       }
     };
+
     fetchData();
   };
 
   return (
     <S.StyledFolderWrapper>
       {data?.subcarpetas.map((item: string, index: any) => (
-        <S.StyledFolder key={index} onClick={() => handleClick(item)}>
+        <S.StyledFolder
+          key={index}
+          onClick={() => {
+            if (!optionMenu.current) {
+              handleClick(item);
+            }
+          }}
+        >
           <FaFolder />
           {item}
-          <SlOptionsVertical />
+          <ContextMenu
+            opened={selectedFolder === item}
+            onChange={(opened) => {
+              setSelectedFolder(opened ? item : null);
+              optionMenu.current = opened ? true : false;
+            }}
+          >
+            <SlOptionsVertical />
+          </ContextMenu>
         </S.StyledFolder>
       ))}
     </S.StyledFolderWrapper>
