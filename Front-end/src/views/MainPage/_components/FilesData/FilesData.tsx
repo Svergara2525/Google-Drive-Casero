@@ -14,6 +14,7 @@ interface Props {
   imageExtensions: string[];
   fileExtensions: string[];
   optionMenu: React.MutableRefObject<boolean>;
+  setRechargePage: (value: string | null) => void;
 }
 
 export const FilesData: React.FC<Props> = ({
@@ -23,6 +24,7 @@ export const FilesData: React.FC<Props> = ({
   imageExtensions,
   fileExtensions,
   optionMenu,
+  setRechargePage,
 }) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
@@ -33,6 +35,7 @@ export const FilesData: React.FC<Props> = ({
           <S.StyledFileBox
             onClick={() => {
               if (!optionMenu.current) {
+                console.log("Click en la imagen");
                 setImage(item);
                 setOpenImage(true);
               }
@@ -47,10 +50,14 @@ export const FilesData: React.FC<Props> = ({
                   setSelectedFile(opened ? item.file_name : null);
                   optionMenu.current = opened ? true : false;
                 }}
+                setRechargePage={setRechargePage}
+                filePath={item.file_path}
               >
                 <SlOptionsVertical
+                  onClick={() => {
+                    console.log("El optionMenu es: ", optionMenu.current);
+                  }}
                   style={{ cursor: "pointer" }}
-                  onClick={() => console.log("Options clicked")}
                 />
               </ContextMenu>
             </S.StyledOptionsFileWrapper>

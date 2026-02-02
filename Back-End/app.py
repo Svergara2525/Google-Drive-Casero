@@ -88,7 +88,7 @@ def servir_archivo(filepath):
         full_path = os.path.abspath('/' + filepath)
         return send_file(full_path)
     except Exception as e:
-        return jsonify({"mensaje": "Error al servir el archivo", "error": str(e)}), 500
+        return jsonify({"mensaje": "Error al servir el archivo", "error": str(e)}), 404
 
 
 @app.route('/download_file/<path:filepath>', methods=['GET'])

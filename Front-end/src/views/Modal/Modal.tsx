@@ -9,8 +9,7 @@ interface Props {
   showFolderModal: boolean | null;
   setShowFileModal: (valor: boolean | null) => void;
   setShowFolderModal: (valor: boolean | null) => void;
-  setUploadedFile: (file: File | null) => void;
-  setUploadedFolder: (folder: string | null) => void;
+  setRechargePage: (valor: string | null) => void;
 }
 
 export const Modal: React.FC<Props> = ({
@@ -19,8 +18,7 @@ export const Modal: React.FC<Props> = ({
   showFolderModal,
   setShowFileModal,
   setShowFolderModal,
-  setUploadedFile,
-  setUploadedFolder,
+  setRechargePage,
 }) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [folderName, setFolderlName] = useState<string | null>(null);
@@ -43,7 +41,7 @@ export const Modal: React.FC<Props> = ({
     const fetchData = async () => {
       try {
         await apiClient.uploadFile(formData);
-        setUploadedFile(selectedFiles ? selectedFiles[0] : null);
+        setRechargePage(selectedFiles ? selectedFiles[0].name : null);
       } catch (error) {
         console.log(error);
       }
@@ -60,7 +58,7 @@ export const Modal: React.FC<Props> = ({
     const fetchData = async () => {
       try {
         await apiClient.createFolder(formData);
-        setUploadedFolder(folderName);
+        setRechargePage(folderName);
       } catch (error) {
         console.log(error);
       }

@@ -33,8 +33,7 @@ export const MainPage: React.FC<Props> = ({
   const [error, setError] = useState<string | null>(null);
   const [imagen, setImage] = useState<file_atributes | null>(null);
   const [openImage, setOpenImage] = useState<boolean | null>(false);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [uploadedFolder, setUploadedFoler] = useState<string | null>(null);
+  const [rechargePage, setRechargePage] = useState<string | null>(null);
   const optionMenu = useRef(false);
   const clickFile = useRef(false);
 
@@ -49,6 +48,9 @@ export const MainPage: React.FC<Props> = ({
   ];
 
   const fileExtensions = [".pdf", ".docx", ".txt"];
+
+  console.log("El optionMenu es: ", optionMenu.current);
+  console.log("El openImage es: ", openImage);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +67,7 @@ export const MainPage: React.FC<Props> = ({
       }
     };
     fetchData();
-  }, [uploadedFile, uploadedFolder]);
+  }, [rechargePage]);
 
   window.onpopstate = (event) => {
     if (event.state && event.state.data) {
@@ -102,6 +104,7 @@ export const MainPage: React.FC<Props> = ({
             imageExtensions={imageExtensions}
             fileExtensions={fileExtensions}
             optionMenu={optionMenu}
+            setRechargePage={setRechargePage}
           />
           {openImage && !optionMenu.current && (
             <OpenFileModal
@@ -121,8 +124,7 @@ export const MainPage: React.FC<Props> = ({
           setShowFolderModal={setShowFolderModal}
           showFileModal={showFileModal}
           showFolderModal={showFolderModal}
-          setUploadedFile={setUploadedFile}
-          setUploadedFolder={setUploadedFoler}
+          setRechargePage={setRechargePage}
         ></Modal>
       )}
     </S.StyledMainPageWrapper>

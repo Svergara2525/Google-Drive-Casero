@@ -5,23 +5,32 @@ interface Props {
   children: React.ReactNode;
   opened: boolean | undefined;
   onChange: (variable: boolean | undefined) => void;
+  setRechargePage: (value: string | null) => void;
+  filePath: string | null;
 }
 
 export const ContextMenu: React.FC<Props> = ({
   children,
   opened,
   onChange,
+  setRechargePage,
+  filePath,
 }) => {
-  const deleteFile = () => {
-    
+  const deleteFile = async () => {
+    await apiClient.deleteFile(filePath || "");
+    setRechargePage(filePath);
   };
 
-  const downloadFile = () => {};
+  const downloadFile = async () => {
+    console.log("Descargar archivo");
+  };
 
-  const renameFile = () => {};
+  const renameFile = () => {
+    console.log("Renombrar archivo");
+  };
 
   return (
-    <Menu opened={opened} onChange={onChange}>
+    <Menu opened={opened} onChange={onChange} closeOnItemClick={false}>
       <Menu.Target>{children}</Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Opciones</Menu.Label>
