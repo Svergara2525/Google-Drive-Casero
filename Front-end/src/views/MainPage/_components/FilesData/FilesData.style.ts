@@ -2,30 +2,28 @@ import styled from "styled-components";
 import { IoDocumentTextOutline } from "react-icons/io5";
 
 export const StyledFilesWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-auto-rows: minmax(200px, auto);
+  align-items: stretch;
   gap: 20px;
   width: 90%;
   height: 70%;
   overflow-y: auto;
   border: 10px solid red;
+  align-content: start;
 `;
 
 export const StyledFileBox = styled.div`
   display: flex;
   border-radius: 10px;
-  border-radius: 10px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  min-height: 200px;
   border: 1px solid black;
   gap: 20px;
-  justify-content: center;
 `;
 
 export const StyledOptionsFileWrapper = styled.div`

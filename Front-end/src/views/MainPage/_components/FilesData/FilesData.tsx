@@ -51,7 +51,7 @@ export const FilesData: React.FC<Props> = ({
                   optionMenu.current = opened ? true : false;
                 }}
                 setRechargePage={setRechargePage}
-                filePath={item.file_path}
+                file={item}
               >
                 <SlOptionsVertical
                   onClick={() => {

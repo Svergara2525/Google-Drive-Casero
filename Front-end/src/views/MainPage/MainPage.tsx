@@ -49,9 +49,6 @@ export const MainPage: React.FC<Props> = ({
 
   const fileExtensions = [".pdf", ".docx", ".txt"];
 
-  console.log("El optionMenu es: ", optionMenu.current);
-  console.log("El openImage es: ", openImage);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,9 +72,6 @@ export const MainPage: React.FC<Props> = ({
     }
   };
 
-  console.log("Option menu ref in MainPage:", optionMenu.current);
-  console.log("Open image state in MainPage:", openImage);
-
   return (
     <S.StyledMainPageWrapper>
       <Buttons
@@ -95,6 +89,7 @@ export const MainPage: React.FC<Props> = ({
               setError={setError}
               data={data}
               optionMenu={optionMenu}
+              setRechargePage={setRechargePage}
             />
           )}
           <FilesData

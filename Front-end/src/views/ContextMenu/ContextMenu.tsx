@@ -1,12 +1,13 @@
 import { Menu } from "@mantine/core";
 import { apiClient } from "../../infrastructure/apiClient";
+import { file_atributes } from "../../Models/file_atributes";
 
 interface Props {
   children: React.ReactNode;
   opened: boolean | undefined;
   onChange: (variable: boolean | undefined) => void;
   setRechargePage: (value: string | null) => void;
-  filePath: string | null;
+  file: file_atributes;
 }
 
 export const ContextMenu: React.FC<Props> = ({
@@ -14,18 +15,14 @@ export const ContextMenu: React.FC<Props> = ({
   opened,
   onChange,
   setRechargePage,
-  filePath,
+  file,
 }) => {
-  const deleteFile = async () => {
+  const deleteFile = async (filePath: string | null) => {
     await apiClient.deleteFile(filePath || "");
     setRechargePage(filePath);
   };
 
-  const downloadFile = async () => {
-    console.log("Descargar archivo");
-  };
-
-  const renameFile = () => {
+  const renameFile = (file: string | null) => {
     console.log("Renombrar archivo");
   };
 
@@ -34,9 +31,17 @@ export const ContextMenu: React.FC<Props> = ({
       <Menu.Target>{children}</Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Opciones</Menu.Label>
-        <Menu.Item onClick={() => deleteFile()}>Borrar Archivo</Menu.Item>
-        <Menu.Item onClick={() => downloadFile()}>Descargar Archivo</Menu.Item>
-        <Menu.Item onClick={() => renameFile()}>Cambiar Nombre</Menu.Item>
+        <Menu.Item onClick={() => deleteFile(file.file_path)}>
+          Borrar Archivo
+        </Menu.Item>
+        <Menu.Item
+          component="a"
+          href={`http://localhost:5001/download_file${file.file_path ?? ""}`}
+          download={file.file_name ?? undefined}
+        ></Menu.Item>
+        <Menu.Item onClick={() => renameFile(file.file_path)}>
+          Cambiar Nombre
+        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );

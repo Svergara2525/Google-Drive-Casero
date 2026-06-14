@@ -14,6 +14,7 @@ interface Props {
   setError: (valor: string | null) => void;
   data: Data | null;
   optionMenu: React.MutableRefObject<boolean>;
+  setRechargePage: (value: string | null) => void;
 }
 
 export const FoldersData: React.FC<Props> = ({
@@ -21,6 +22,7 @@ export const FoldersData: React.FC<Props> = ({
   setError,
   data,
   optionMenu,
+  setRechargePage,
 }) => {
   const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
 
@@ -56,12 +58,21 @@ export const FoldersData: React.FC<Props> = ({
           }}
         >
           <FaFolder />
-          {item}
+          <S.StyledFolderName>{item}</S.StyledFolderName>
           <ContextMenu
             opened={selectedFolder === item}
             onChange={(opened) => {
               setSelectedFolder(opened ? item : null);
               optionMenu.current = opened ? true : false;
+            }}
+            setRechargePage={setRechargePage}
+            file={{
+              file_path:
+                window.location.pathname === "/"
+                  ? `/${item}`
+                  : `${window.location.pathname}/${item}`,
+              file_name: item,
+              extension: "",
             }}
           >
             <SlOptionsVertical />
