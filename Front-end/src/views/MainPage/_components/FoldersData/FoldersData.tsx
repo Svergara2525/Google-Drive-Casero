@@ -15,6 +15,9 @@ interface Props {
   data: Data | null;
   optionMenu: React.MutableRefObject<boolean>;
   setRechargePage: (value: string | null) => void;
+  setShowFolderModal: (valor: boolean | null) => void;
+  setShowFileModal: (valor: boolean | null) => void;
+  setShowModal: (valor: boolean | null) => void;
 }
 
 export const FoldersData: React.FC<Props> = ({
@@ -23,13 +26,14 @@ export const FoldersData: React.FC<Props> = ({
   data,
   optionMenu,
   setRechargePage,
+  setShowFolderModal,
+  setShowModal,
 }) => {
   const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
 
   const handleClick = (item: string) => {
     const fetchData = async () => {
       try {
-        console.log(window.location.pathname);
         const nuevaURL =
           window.location.pathname === "/"
             ? `/${item}`
@@ -66,14 +70,17 @@ export const FoldersData: React.FC<Props> = ({
               optionMenu.current = opened ? true : false;
             }}
             setRechargePage={setRechargePage}
+            setShowFolderModal={setShowFolderModal}
+            setShowModal={setShowModal}
             file={{
               file_path:
                 window.location.pathname === "/"
                   ? `/${item}`
-                  : `${window.location.pathname}/${item}`,
+                  : `${window.location.pathname.replace(/^\/+/, "")}/${item}`,
               file_name: item,
               extension: "",
             }}
+            isFile={false}
           >
             <SlOptionsVertical />
           </ContextMenu>

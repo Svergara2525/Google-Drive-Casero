@@ -34,6 +34,7 @@ export const MainPage: React.FC<Props> = ({
   const [imagen, setImage] = useState<file_atributes | null>(null);
   const [openImage, setOpenImage] = useState<boolean | null>(false);
   const [rechargePage, setRechargePage] = useState<string | null>(null);
+  const [isCreateFolder, setIsCreateFolder] = useState<boolean | null>(false);
   const optionMenu = useRef(false);
   const clickFile = useRef(false);
 
@@ -75,6 +76,7 @@ export const MainPage: React.FC<Props> = ({
   return (
     <S.StyledMainPageWrapper>
       <Buttons
+        setIsCreateFolder={setIsCreateFolder}
         setShowFolderModal={setShowFolderModal}
         setShowFileModal={setShowFileModal}
         setShowModal={setShowModal}
@@ -82,7 +84,7 @@ export const MainPage: React.FC<Props> = ({
       {loading && <S.StyledDataWrapper>Cargando...</S.StyledDataWrapper>}
       {error && <S.StyledDataWrapper>{error}</S.StyledDataWrapper>}
       {data && (
-        <S.StyledDataWrapper>
+        <>
           {data.subcarpetas.length !== 0 && (
             <FoldersData
               setData={setData}
@@ -90,6 +92,9 @@ export const MainPage: React.FC<Props> = ({
               data={data}
               optionMenu={optionMenu}
               setRechargePage={setRechargePage}
+              setShowFolderModal={setShowFolderModal}
+              setShowFileModal={setShowFileModal}
+              setShowModal={setShowModal}
             />
           )}
           <FilesData
@@ -100,6 +105,9 @@ export const MainPage: React.FC<Props> = ({
             fileExtensions={fileExtensions}
             optionMenu={optionMenu}
             setRechargePage={setRechargePage}
+            setShowFolderModal={setShowFolderModal}
+            setShowFileModal={setShowFileModal}
+            setShowModal={setShowModal}
           />
           {openImage && !optionMenu.current && (
             <OpenFileModal
@@ -110,7 +118,7 @@ export const MainPage: React.FC<Props> = ({
               fileExtensions={fileExtensions}
             />
           )}
-        </S.StyledDataWrapper>
+        </>
       )}
       {showModal && (
         <Modal
@@ -120,6 +128,8 @@ export const MainPage: React.FC<Props> = ({
           showFileModal={showFileModal}
           showFolderModal={showFolderModal}
           setRechargePage={setRechargePage}
+          isCreateFolder={isCreateFolder}
+          setIsCreateFolder={setIsCreateFolder}
         ></Modal>
       )}
     </S.StyledMainPageWrapper>

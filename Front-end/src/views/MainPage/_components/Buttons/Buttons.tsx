@@ -4,12 +4,14 @@ interface Props {
   setShowModal: (valor: boolean | null) => void;
   setShowFileModal: (valor: boolean | null) => void;
   setShowFolderModal: (valor: boolean | null) => void;
+  setIsCreateFolder: (valor: boolean | null) => void;
 }
 
 export const Buttons: React.FC<Props> = ({
   setShowModal,
   setShowFileModal,
   setShowFolderModal,
+  setIsCreateFolder,
 }) => {
   return (
     <S.StyledButtonWrapper>
@@ -17,6 +19,7 @@ export const Buttons: React.FC<Props> = ({
         onClick={() => {
           setShowModal(true);
           setShowFolderModal(true);
+          setIsCreateFolder(true);
         }}
       >
         Crear carpeta

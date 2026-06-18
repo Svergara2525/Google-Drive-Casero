@@ -19,10 +19,5 @@ swagger_template = {
             "in": "header",
             "description": "Enter the token with the `Bearer: ` prefix, e.g. Bearer abcde12345."
         }
-    },
-    "security": [
-        {
-            "Bearer": []
-        }
-    ]
+    }
 }

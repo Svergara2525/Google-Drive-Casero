@@ -39,7 +39,7 @@ def navegar(directorio):
     try:
         print("El directorio a añadir: ", directorio)
         dir_path = os.path.join(os.path.expanduser("~"))
-        dir_path = os.path.join(dir_path, directorio);
+        dir_path = os.path.join(dir_path, directorio)
         if os.path.isdir(dir_path):
             subfolders = []
             files = []
@@ -103,7 +103,7 @@ def download_file(filepath):
 @app.route('/crear_carpeta', methods=['POST'])
 @swag_from('swaggerDocs/crear_carpeta.yml')
 def crear_carpeta():
-    path = request.form.get('path')
+    path = request.get_json().get('path')
     if not path:
         return jsonify({"mensaje": "No se ha proporcionado el nombre de la carpeta"}), 404
     print("El path de la carpeta a crear: ", path)
@@ -124,23 +124,36 @@ def eliminar_archivo():
         path = request.get_json().get('path')
         if not path:
             return jsonify({"mensaje": "No se ha proporcionado el nombre del archivo"}), 400
-        os.remove(path)
-        return jsonify({"mensaje": "Archivo eliminado correctamente"}), 200
-    except Exception as e:
-        return jsonify({"mensaje": "Error al eliminar el archivo", "error": str(e)}), 500
-
-
-@app.route("/eliminar_carpeta", methods=['POST'])
-@swag_from('swaggerDocs/eliminar_carpeta.yml')
-def eliminar_carpeta():
-    try:
-        path = request.get_json().get('path')
-        if not path:
-            return jsonify({"mensaje": "No se ha proporcionado el nombre de la carpeta"}), 400
-        shutil.rmtree(path)
+        isFile = request.get_json().get("isFile")
+        if (isFile):
+            os.remove(path)
+            return jsonify({"mensaje": "Archivo eliminado correctamente"}), 200
+        dir_path = os.path.join(os.path.expanduser("~"))
+        dir_path = os.path.join(dir_path, path)
+        shutil.rmtree(dir_path)
         return jsonify({"mensaje": "Carpeta eliminada correctamente"}), 200
     except Exception as e:
-        return jsonify({"mensaje": "Error al eliminar la carpeta", "error": str(e)}), 500
+        return jsonify({"mensaje": "Error al eliminar el archivo", "error": str(e)}), 500
+    
+
+@app.route("/renombrar_archivo", methods=['POST'])
+@swag_from('swaggerDocs/renombrar_archivo.yml')
+def renombrar_archivo():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"mensaje": "No se ha proporcionado el nombre del archivo"}), 400
+
+        old_path = data.get('old_path')
+        new_path = data.get('new_path')
+
+        if not old_path or not new_path:
+            return jsonify({"mensaje": "No se ha proporcionado el nombre del archivo antiguo o nuevo"}), 400
+        
+        os.rename(old_path, new_path)
+        return jsonify({"mensaje": "Archivo renombrado correctamente"}), 200
+    except Exception as e:
+        return jsonify({"mensaje": "Error al renombrar el archivo", "error": str(e)}), 500
 
 
     

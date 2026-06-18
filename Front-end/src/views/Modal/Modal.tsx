@@ -10,6 +10,8 @@ interface Props {
   setShowFileModal: (valor: boolean | null) => void;
   setShowFolderModal: (valor: boolean | null) => void;
   setRechargePage: (valor: string | null) => void;
+  isCreateFolder: boolean | null;
+  setIsCreateFolder: (valor: boolean | null) => void;
 }
 
 export const Modal: React.FC<Props> = ({
@@ -19,6 +21,8 @@ export const Modal: React.FC<Props> = ({
   setShowFileModal,
   setShowFolderModal,
   setRechargePage,
+  isCreateFolder,
+  setIsCreateFolder,
 }) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [folderName, setFolderlName] = useState<string | null>(null);
@@ -28,6 +32,13 @@ export const Modal: React.FC<Props> = ({
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFiles(event.target.files);
     }
+  };
+
+  const renameFile = async (file: string | null) => {
+    const folderPath = file?.substring(0, file?.lastIndexOf("/"));
+    await apiClient.renameFile(file || "", file ?? "");
+    setRechargePage(folderPath + "/" + file);
+    console.log("Renombrar archivo");
   };
 
   const handleUpload = () => {
@@ -50,20 +61,26 @@ export const Modal: React.FC<Props> = ({
   };
 
   const createFolder = (folderName: string) => {
-    const formData = new FormData();
-    formData.append(
-      "path",
-      window.location.pathname.replace(/^\/+/, "") + "/" + folderName,
-    );
     const fetchData = async () => {
       try {
-        await apiClient.createFolder(formData);
+        await apiClient.createFolder(folderName);
         setRechargePage(folderName);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
+  };
+
+  const handleNombreCarpeta = (folderName: string) => {
+    folderName =
+      window.location.pathname.replace(/^\/+/, "") + "/" + folderName;
+    if (isCreateFolder) {
+      createFolder(folderName);
+      setIsCreateFolder(false);
+    } else {
+      renameFile(folderName ?? "");
+    }
   };
 
   const handleFolderName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,7 +161,7 @@ export const Modal: React.FC<Props> = ({
               <S.StyledButton
                 disabled={!folderName}
                 onClick={() => {
-                  createFolder(folderName ?? "");
+                  handleNombreCarpeta(folderName ?? "");
                   setShowModal(false);
                   setShowFolderModal(false);
                 }}

@@ -1,0 +1,44 @@
+---
+tags:
+  - Archivos
+summary: Renombrar archivo
+description: Renombra un archivo de una ruta a otra. El cuerpo debe enviar old_path y new_path en el JSON raíz.
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        old_path:
+          type: string
+          description: Ruta actual del archivo.
+        new_path:
+          type: string
+          description: Nueva ruta o nombre del archivo.
+      required:
+        - old_path
+        - new_path
+      example:
+        old_path: /home/usuario/archivo.txt
+        new_path: /home/usuario/archivo_nuevo.txt
+responses:
+  200:
+    description: Archivo renombrado correctamente
+    examples:
+      application/json:
+        mensaje: Archivo renombrado correctamente
+  400:
+    description: No se ha proporcionado el nombre del archivo antiguo o nuevo
+    examples:
+      application/json:
+        mensaje: No se ha proporcionado el nombre del archivo antiguo o nuevo
+  500:
+    description: Error al renombrar el archivo
+    examples:
+      application/json:
+        mensaje: Error al renombrar el archivo

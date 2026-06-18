@@ -8,10 +8,8 @@ export const StyledFilesWrapper = styled.div`
   align-items: stretch;
   gap: 20px;
   width: 90%;
-  height: 70%;
-  overflow-y: auto;
-  border: 10px solid red;
   align-content: start;
+  margin-top: 10px;
 `;
 
 export const StyledFileBox = styled.div`

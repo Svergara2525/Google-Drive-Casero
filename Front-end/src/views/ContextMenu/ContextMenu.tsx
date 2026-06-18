@@ -8,6 +8,9 @@ interface Props {
   onChange: (variable: boolean | undefined) => void;
   setRechargePage: (value: string | null) => void;
   file: file_atributes;
+  isFile: boolean;
+  setShowModal: (valor: boolean | null) => void;
+  setShowFolderModal: (valor: boolean | null) => void;
 }
 
 export const ContextMenu: React.FC<Props> = ({
@@ -16,14 +19,13 @@ export const ContextMenu: React.FC<Props> = ({
   onChange,
   setRechargePage,
   file,
+  isFile,
+  setShowModal,
+  setShowFolderModal,
 }) => {
-  const deleteFile = async (filePath: string | null) => {
-    await apiClient.deleteFile(filePath || "");
+  const deleteFile = async (filePath: string | null, isFile: boolean) => {
+    await apiClient.deleteFile(filePath || "", isFile);
     setRechargePage(filePath);
-  };
-
-  const renameFile = (file: string | null) => {
-    console.log("Renombrar archivo");
   };
 
   return (
@@ -31,7 +33,7 @@ export const ContextMenu: React.FC<Props> = ({
       <Menu.Target>{children}</Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Opciones</Menu.Label>
-        <Menu.Item onClick={() => deleteFile(file.file_path)}>
+        <Menu.Item onClick={() => deleteFile(file.file_path, isFile)}>
           Borrar Archivo
         </Menu.Item>
         <Menu.Item
@@ -39,7 +41,12 @@ export const ContextMenu: React.FC<Props> = ({
           href={`http://localhost:5001/download_file${file.file_path ?? ""}`}
           download={file.file_name ?? undefined}
         ></Menu.Item>
-        <Menu.Item onClick={() => renameFile(file.file_path)}>
+        <Menu.Item
+          onClick={() => {
+            setShowModal(true);
+            setShowFolderModal(true);
+          }}
+        >
           Cambiar Nombre
         </Menu.Item>
       </Menu.Dropdown>

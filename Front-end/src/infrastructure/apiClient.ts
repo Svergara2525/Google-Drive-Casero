@@ -10,13 +10,21 @@ export const apiClient = (() => {
       axios
         .post(conexion + "/subir_archivo", formData)
         .then((response) => response.data),
-    createFolder: (formData: FormData) =>
+    createFolder: (folderName: string) =>
       axios
-        .post(conexion + "/crear_carpeta", formData)
+        .post(conexion + "/crear_carpeta", { path: folderName })
         .then((response) => response.data),
-    deleteFile: (filePath: string) =>
+    deleteFile: (filePath: string, isFile: boolean) =>
       axios
-        .post(conexion + "/eliminar_archivo", { path: filePath })
+        .post(conexion + "/eliminar_archivo", {
+          path: filePath,
+          isFile: isFile,
+        })
         .then((response) => response.data),
+    renameFile: (oldPath: string, newPath: string) =>
+      axios.post(conexion + "/renombrar_archivo", {
+        old_path: oldPath,
+        new_path: newPath,
+      }),
   };
 })();

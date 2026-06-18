@@ -15,6 +15,9 @@ interface Props {
   fileExtensions: string[];
   optionMenu: React.MutableRefObject<boolean>;
   setRechargePage: (value: string | null) => void;
+  setShowFolderModal: (valor: boolean | null) => void;
+  setShowFileModal: (valor: boolean | null) => void;
+  setShowModal: (valor: boolean | null) => void;
 }
 
 export const FilesData: React.FC<Props> = ({
@@ -25,6 +28,8 @@ export const FilesData: React.FC<Props> = ({
   fileExtensions,
   optionMenu,
   setRechargePage,
+  setShowFolderModal,
+  setShowModal,
 }) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
@@ -52,6 +57,9 @@ export const FilesData: React.FC<Props> = ({
                 }}
                 setRechargePage={setRechargePage}
                 file={item}
+                isFile={true}
+                setShowModal={setShowModal}
+                setShowFolderModal={setShowFolderModal}
               >
                 <SlOptionsVertical
                   onClick={() => {

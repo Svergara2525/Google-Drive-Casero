@@ -5,9 +5,10 @@ export const StyledButtonWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 20%;
+  height: 100px;
   width: 100%;
   gap: 10px;
+  margin-top: 10px;
 `;
 
 export const StyledButton = styled.button`

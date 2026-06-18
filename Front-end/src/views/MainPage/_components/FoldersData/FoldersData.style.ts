@@ -7,11 +7,9 @@ export const StyledFolderWrapper = styled.div`
   cursor: pointer;
   align-items: stretch;
   gap: 20px;
-  overflow-y: auto;
   width: 90%;
-  height: 30%;
-  border: 10px solid black;
   align-content: start;
+  margin-top: 10px;
 `;
 
 export const StyledFolder = styled.div`
