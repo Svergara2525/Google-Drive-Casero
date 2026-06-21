@@ -11,6 +11,9 @@ interface Props {
   isFile: boolean;
   setShowModal: (valor: boolean | null) => void;
   setShowFolderModal: (valor: boolean | null) => void;
+  setFilePath: (valor: string | null) => void;
+  isRefreshAfterDelete: React.MutableRefObject<boolean>;
+  setFileExtension: (valor: string | null) => void;
 }
 
 export const ContextMenu: React.FC<Props> = ({
@@ -22,8 +25,12 @@ export const ContextMenu: React.FC<Props> = ({
   isFile,
   setShowModal,
   setShowFolderModal,
+  setFilePath,
+  isRefreshAfterDelete,
+  setFileExtension,
 }) => {
   const deleteFile = async (filePath: string | null, isFile: boolean) => {
+    isRefreshAfterDelete.current = true;
     await apiClient.deleteFile(filePath || "", isFile);
     setRechargePage(filePath);
   };
@@ -45,6 +52,8 @@ export const ContextMenu: React.FC<Props> = ({
           onClick={() => {
             setShowModal(true);
             setShowFolderModal(true);
+            setFilePath(file.file_path);
+            setFileExtension(file.extension);
           }}
         >
           Cambiar Nombre

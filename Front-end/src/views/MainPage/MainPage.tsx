@@ -35,8 +35,11 @@ export const MainPage: React.FC<Props> = ({
   const [openImage, setOpenImage] = useState<boolean | null>(false);
   const [rechargePage, setRechargePage] = useState<string | null>(null);
   const [isCreateFolder, setIsCreateFolder] = useState<boolean | null>(false);
+  const [filePath, setFilePath] = useState<string | null>(null);
+  const [fileExtension, setFileExtension] = useState<string | null>(null);
   const optionMenu = useRef(false);
   const clickFile = useRef(false);
+  const isRefreshAfterDelete = useRef(false);
 
   const imageExtensions = [
     ".jpg",
@@ -55,7 +58,13 @@ export const MainPage: React.FC<Props> = ({
       try {
         const currentPath = window.location.pathname;
         const response = await apiClient.folderSelect(currentPath);
-        history.pushState({ data: response }, "", currentPath);
+        // Usar replaceState si se refresca después de borrar, pushState para navegación normal
+        if (isRefreshAfterDelete.current) {
+          history.replaceState({ data: response }, "", currentPath);
+          isRefreshAfterDelete.current = false;
+        } else {
+          history.pushState({ data: response }, "", currentPath);
+        }
         setData(response);
       } catch (error) {
         console.log(error);
@@ -95,6 +104,9 @@ export const MainPage: React.FC<Props> = ({
               setShowFolderModal={setShowFolderModal}
               setShowFileModal={setShowFileModal}
               setShowModal={setShowModal}
+              setFilePath={setFilePath}
+              isRefreshAfterDelete={isRefreshAfterDelete}
+              setFileExtension={setFileExtension}
             />
           )}
           <FilesData
@@ -108,6 +120,9 @@ export const MainPage: React.FC<Props> = ({
             setShowFolderModal={setShowFolderModal}
             setShowFileModal={setShowFileModal}
             setShowModal={setShowModal}
+            setFilePath={setFilePath}
+            isRefreshAfterDelete={isRefreshAfterDelete}
+            setFileExtension={setFileExtension}
           />
           {openImage && !optionMenu.current && (
             <OpenFileModal
@@ -130,6 +145,8 @@ export const MainPage: React.FC<Props> = ({
           setRechargePage={setRechargePage}
           isCreateFolder={isCreateFolder}
           setIsCreateFolder={setIsCreateFolder}
+          filePath={filePath}
+          fileExtension={fileExtension}
         ></Modal>
       )}
     </S.StyledMainPageWrapper>

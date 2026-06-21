@@ -12,6 +12,8 @@ interface Props {
   setRechargePage: (valor: string | null) => void;
   isCreateFolder: boolean | null;
   setIsCreateFolder: (valor: boolean | null) => void;
+  filePath: string | null;
+  fileExtension: string | null;
 }
 
 export const Modal: React.FC<Props> = ({
@@ -23,6 +25,8 @@ export const Modal: React.FC<Props> = ({
   setRechargePage,
   isCreateFolder,
   setIsCreateFolder,
+  filePath,
+  fileExtension,
 }) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [folderName, setFolderlName] = useState<string | null>(null);
@@ -34,10 +38,14 @@ export const Modal: React.FC<Props> = ({
     }
   };
 
-  const renameFile = async (file: string | null) => {
-    const folderPath = file?.substring(0, file?.lastIndexOf("/"));
-    await apiClient.renameFile(file || "", file ?? "");
-    setRechargePage(folderPath + "/" + file);
+  const renameFile = async (newFile: string | null) => {
+    const folderPath = newFile?.substring(0, newFile?.lastIndexOf("/"));
+    await apiClient.renameFile(
+      filePath || "",
+      newFile ?? "",
+      fileExtension || "",
+    );
+    setRechargePage(folderPath + "/" + newFile);
     console.log("Renombrar archivo");
   };
 
@@ -152,7 +160,7 @@ export const Modal: React.FC<Props> = ({
         {showFolderModal && (
           <S.ModalOptionWrapper>
             <S.StyledInputFolderName
-              placeholder="Introduce el nombre de la carpeta"
+              placeholder="Introduce el nombre"
               type="text"
               value={folderName ?? ""}
               onChange={handleFolderName}
@@ -166,12 +174,13 @@ export const Modal: React.FC<Props> = ({
                   setShowFolderModal(false);
                 }}
               >
-                Crear carpeta
+                {isCreateFolder ? "Crear carpeta" : "Cambiar nombre"}
               </S.StyledButton>
               <S.StyledButton
                 onClick={() => {
                   setShowModal(false);
                   setShowFolderModal(false);
+                  setIsCreateFolder(false);
                 }}
               >
                 Cerrar

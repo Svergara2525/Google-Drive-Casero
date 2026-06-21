@@ -146,6 +146,14 @@ def renombrar_archivo():
 
         old_path = data.get('old_path')
         new_path = data.get('new_path')
+        extension = data.get('extension')
+
+        dir_path = os.path.join(os.path.expanduser("~"))
+        old_path = os.path.join(dir_path, old_path)
+        if extension and extension != "":
+            new_path = os.path.join(dir_path, new_path) + extension
+        else:
+            new_path = os.path.join(dir_path, new_path)
 
         if not old_path or not new_path:
             return jsonify({"mensaje": "No se ha proporcionado el nombre del archivo antiguo o nuevo"}), 400

@@ -18,5 +18,4 @@ export const StyledDataWrapper = styled.div`
   height: 80%;
   gap: 15px;
   width: 98%;
-  border: 10px solid black;
 `;

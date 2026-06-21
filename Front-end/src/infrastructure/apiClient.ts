@@ -21,10 +21,11 @@ export const apiClient = (() => {
           isFile: isFile,
         })
         .then((response) => response.data),
-    renameFile: (oldPath: string, newPath: string) =>
+    renameFile: (oldPath: string, newPath: string, extension: string) =>
       axios.post(conexion + "/renombrar_archivo", {
         old_path: oldPath,
         new_path: newPath,
+        extension: extension,
       }),
   };
 })();
