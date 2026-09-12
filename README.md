@@ -1,5 +1,7 @@
 # Google Drive Casero
 
+## ¡¡¡¡¡¡APLICACIÓN AÚN EN DESARROLLO!!!!!!!
+
 Sirve para guardar fotos en tu ordenador como si fuera una web de almacenamiento en la nube.
 
 Permite:
