@@ -4,6 +4,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { Data } from "../../../../Models/data";
 import { file_atributes } from "../../../../Models/file_atributes";
 import { ContextMenu } from "../../../ContextMenu";
+import { API_URL } from "../../../../infrastructure/apiClient";
 
 import * as S from "./FilesData.style";
 
@@ -80,7 +81,7 @@ export const FilesData: React.FC<Props> = ({
             </S.StyledOptionsFileWrapper>
             {imageExtensions.includes(item.extension.toLowerCase()) ? (
               <S.StyledImagePreview
-                src={`http://localhost:5001/files${item.file_path}`}
+                src={`${API_URL}/files${item.file_path}`}
                 alt="Imagen"
                 key={index}
               />

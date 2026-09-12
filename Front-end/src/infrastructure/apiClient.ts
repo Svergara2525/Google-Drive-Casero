@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const API_URL = `http://${window.location.hostname}:5001`;
+
 export const apiClient = (() => {
-  const conexion = "http://localhost:5001";
+  const conexion = API_URL;
   return {
     getFWS: () => axios.get(conexion).then((response) => response.data),
     folderSelect: (folderSelect: string) =>

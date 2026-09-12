@@ -81,8 +81,8 @@ export const Modal: React.FC<Props> = ({
   };
 
   const handleNombreCarpeta = (folderName: string) => {
-    folderName =
-      window.location.pathname.replace(/^\/+/, "") + "/" + folderName;
+    const currentPath = window.location.pathname.replace(/^\/+|\/+$/g, "");
+    folderName = currentPath ? `${currentPath}/${folderName}` : folderName;
     if (isCreateFolder) {
       createFolder(folderName);
       setIsCreateFolder(false);

@@ -1,5 +1,5 @@
 import { Menu } from "@mantine/core";
-import { apiClient } from "../../infrastructure/apiClient";
+import { API_URL, apiClient } from "../../infrastructure/apiClient";
 import { file_atributes } from "../../Models/file_atributes";
 
 interface Props {
@@ -45,7 +45,7 @@ export const ContextMenu: React.FC<Props> = ({
         </Menu.Item>
         <Menu.Item
           component="a"
-          href={`http://localhost:5001/download_file${file.file_path ?? ""}`}
+          href={`${API_URL}/download_file${file.file_path ?? ""}`}
           download={file.file_name ?? undefined}
         ></Menu.Item>
         <Menu.Item

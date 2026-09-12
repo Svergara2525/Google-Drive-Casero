@@ -26,9 +26,21 @@ def conexion():
     try:
         dir_path = os.path.join(os.path.expanduser("~"))
         print(dir_path)
-        directories = [ f.path for f in os.scandir(dir_path) if f.is_dir()]
-        directory_names = [os.path.basename(d) for d in directories]
-        return jsonify({"subcarpetas": directory_names}), 200
+        subfolders = []
+        files = []
+
+        for entry in os.scandir(dir_path):
+            if entry.is_dir():
+                subfolders.append(entry.name)
+            elif entry.is_file() and not entry.name.startswith('.'):
+                file_name, extension = os.path.splitext(entry.name)
+                files.append({
+                    "file_path": entry.path,
+                    "file_name": file_name,
+                    "extension": extension
+                })
+
+        return jsonify({"subcarpetas": subfolders, "archivos": files}), 200
     except Exception as e:
         return jsonify({"mensaje": "Error al conectar con el directorio", "error": str(e)}), 500
 
@@ -106,6 +118,7 @@ def crear_carpeta():
     path = request.get_json().get('path')
     if not path:
         return jsonify({"mensaje": "No se ha proporcionado el nombre de la carpeta"}), 404
+    path = path.lstrip('/\\')
     print("El path de la carpeta a crear: ", path)
     dir_path = os.path.join(os.path.expanduser("~"))
     dir_path = Path(os.path.join(dir_path, path))

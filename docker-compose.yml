@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./Back-End
+    ports:
+      - "5001:5001"
+    environment:
+      # El backend usa expanduser("~") como carpeta de archivos.
+      HOME: /data
+    volumes:
+      - /Users/vergara/Documents/Fotos:/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5001/', timeout=3)",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./Front-end
+    ports:
+      - "5173:5173"
+    depends_on:
+      backend:
+        condition: service_healthy

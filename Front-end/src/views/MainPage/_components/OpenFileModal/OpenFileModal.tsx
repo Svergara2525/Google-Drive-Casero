@@ -1,5 +1,6 @@
 import { CloseModalBar } from "../../../CloseModalBar";
 import { file_atributes } from "../../../../Models/file_atributes";
+import { API_URL } from "../../../../infrastructure/apiClient";
 
 import * as S from "./OpenFileModal.style";
 
@@ -32,12 +33,12 @@ export const OpenFileModal: React.FC<Props> = ({
           onClick={() => {
             clickFile.current = true;
           }}
-          src={`http://localhost:5001/files${imagen?.file_path}`}
+          src={`${API_URL}/files${imagen?.file_path}`}
           alt="Imagen"
         />
       ) : fileExtensions.includes((imagen?.extension ?? "").toLowerCase()) ? (
         <iframe
-          src={`http://localhost:5001/files${imagen?.file_path}`}
+          src={`${API_URL}/files${imagen?.file_path}`}
           width="100%"
           height="100%"
           title="Archivo"

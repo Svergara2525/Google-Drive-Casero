@@ -1,4 +1,5 @@
 import { file_atributes } from "../../Models/file_atributes";
+import { API_URL } from "../../infrastructure/apiClient";
 
 import * as S from "./CloseModalBar.style";
 
@@ -12,7 +13,7 @@ export const CloseModalBar: React.FC<Props> = ({ setOpenModal, imagen }) => {
     <>
       <S.StyledCloseButton onClick={() => setOpenModal(false)} />
       <S.StyledDownloadWrapper
-        href={`http://localhost:5001/download_file${imagen?.file_path}`}
+        href={`${API_URL}/download_file${imagen?.file_path}`}
         download={imagen?.file_name}
       >
         <S.StyledDownloadButton />
