@@ -8,7 +8,8 @@ services:
       # El backend usa expanduser("~") como carpeta de archivos.
       HOME: /data
     volumes:
-      - ...
+      - volumes:
+  - /Users/vergara/Documents/Test:/data   
     healthcheck:
       test:
         [

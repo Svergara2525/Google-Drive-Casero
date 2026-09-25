@@ -37,3 +37,4 @@ flask_session
 *.pkl
 *.whl
 *.db
+docker-compose.yml
