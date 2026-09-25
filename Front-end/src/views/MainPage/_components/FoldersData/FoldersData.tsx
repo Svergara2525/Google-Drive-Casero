@@ -7,7 +7,7 @@ import { apiClient } from "../../../../infrastructure/apiClient";
 import { Data } from "../../../../Models/data";
 import { ContextMenu } from "../../../ContextMenu";
 
-import * as S from "./FoldersData.style";
+import "./FoldersData.css";
 
 interface Props {
   setData: (valor: Data | null) => void;
@@ -57,9 +57,10 @@ export const FoldersData: React.FC<Props> = ({
   };
 
   return (
-    <S.StyledFolderWrapper>
-      {data?.subcarpetas.map((item: string, index: any) => (
-        <S.StyledFolder
+    <div className="folders-grid">
+      {data?.subcarpetas.map((item: string, index: number) => (
+        <div
+          className="folder-card"
           key={index}
           onClick={() => {
             if (!optionMenu.current) {
@@ -67,8 +68,15 @@ export const FoldersData: React.FC<Props> = ({
             }
           }}
         >
-          <FaFolder />
-          <S.StyledFolderName>{item}</S.StyledFolderName>
+          <span className="folder-icon">
+            <FaFolder aria-hidden="true" />
+          </span>
+          <div className="folder-info">
+            <span className="folder-name" title={item}>
+              {item}
+            </span>
+            <span className="folder-caption">Carpeta</span>
+          </div>
           <ContextMenu
             opened={selectedFolder === item}
             onChange={(opened) => {
@@ -91,10 +99,12 @@ export const FoldersData: React.FC<Props> = ({
             isRefreshAfterDelete={isRefreshAfterDelete}
             setFileExtension={setFileExtension}
           >
-            <SlOptionsVertical />
+            <button className="icon-button" aria-label={`Opciones de ${item}`}>
+              <SlOptionsVertical aria-hidden="true" />
+            </button>
           </ContextMenu>
-        </S.StyledFolder>
+        </div>
       ))}
-    </S.StyledFolderWrapper>
+    </div>
   );
 };

@@ -1,0 +1,33 @@
+.file-context-menu {
+  min-width: 190px;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 32px #2539571f;
+}
+.file-context-menu .mantine-Menu-label {
+  padding: 8px 10px;
+  color: #8a96a9;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.file-context-menu .mantine-Menu-item {
+  padding: 10px;
+  border-radius: 7px;
+  color: #42516a;
+  font-size: 12px;
+}
+.file-context-menu .mantine-Menu-item:hover {
+  background: #f1f5fc;
+}
+.file-context-menu .file-context-menu-delete {
+  color: #c25c68;
+}
+.file-context-menu .file-context-menu-delete:hover {
+  background: #fff1f3;
+}
+.file-context-menu .mantine-Menu-itemSection {
+  margin-right: 10px;
+  font-size: 15px;
+}

@@ -1,0 +1,220 @@
+.main-page {
+  min-width: 0;
+}
+.main-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 83px;
+  gap: 20px;
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--color-border);
+  background: #ffffffb3;
+}
+.main-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+.main-breadcrumb > svg:first-child {
+  font-size: 19px;
+  color: var(--color-primary);
+}
+.main-breadcrumb strong {
+  color: #3e4a60;
+  font-weight: 500;
+}
+.main-local-label {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+.main-content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 43px 40px 60px;
+}
+.main-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 35px;
+}
+.main-eyebrow {
+  margin-bottom: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #8895ab;
+  letter-spacing: 1.8px;
+}
+.main-heading h1 {
+  font-size: clamp(27px, 3vw, 34px);
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -1.2px;
+}
+.main-description {
+  margin-top: 12px;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.main-location {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0 20px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 28px;
+  font-size: 12px;
+}
+.main-location > div {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 9px;
+  font-weight: 600;
+}
+.main-location > div > svg {
+  flex-shrink: 0;
+  font-size: 17px;
+  color: var(--color-primary);
+}
+.main-location > div > span {
+  overflow-wrap: anywhere;
+}
+.main-view-label {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 7px;
+  color: var(--color-muted);
+  font-size: 11px;
+}
+.library-section + .library-section {
+  margin-top: 35px;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 17px;
+}
+.section-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 650;
+}
+.section-heading h2 > span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 23px;
+  padding: 2px 6px;
+  background: #eaf0f8;
+  border-radius: 6px;
+  color: #7a89a0;
+  font-size: 10px;
+  font-weight: 500;
+}
+.section-heading > span {
+  font-size: 11px;
+  color: #8490a4;
+}
+.main-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  text-align: center;
+  min-height: 280px;
+  padding: 36px 24px;
+}
+.main-state h2 {
+  font-size: 17px;
+  font-weight: 600;
+}
+.main-state p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+.main-state--empty {
+  background: #ffffffa6;
+  border: 1px dashed #d9e2f0;
+  border-radius: 16px;
+}
+.empty-state-icon {
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 5px;
+  background: #edf2ff;
+  color: var(--color-primary);
+  border-radius: 22px;
+  font-size: 34px;
+}
+.main-state--error > svg {
+  font-size: 32px;
+  color: #c26d47;
+}
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #e0e8fa;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: loading-spin 850ms linear infinite;
+}
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 1100px) {
+  .main-content {
+    padding: 30px 25px 45px;
+  }
+  .main-topbar {
+    padding-inline: 25px;
+  }
+}
+@media (max-width: 640px) {
+  .main-topbar {
+    min-height: 57px;
+    padding: 16px 20px;
+  }
+  .main-local-label {
+    display: none;
+  }
+  .main-content {
+    padding: 28px 20px 40px;
+  }
+  .main-heading {
+    gap: 23px;
+    margin-bottom: 20px;
+  }
+  .main-description {
+    font-size: 12px;
+  }
+  .main-location {
+    gap: 10px;
+  }
+  .main-view-label {
+    font-size: 0;
+  }
+  .main-view-label svg {
+    font-size: 16px;
+  }
+  .section-heading > span {
+    display: none;
+  }
+}

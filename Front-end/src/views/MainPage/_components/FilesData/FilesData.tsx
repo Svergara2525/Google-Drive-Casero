@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
+import { FiFile, FiFileText, FiImage } from "react-icons/fi";
 
 import { Data } from "../../../../Models/data";
 import { file_atributes } from "../../../../Models/file_atributes";
 import { ContextMenu } from "../../../ContextMenu";
 import { API_URL } from "../../../../infrastructure/apiClient";
 
-import * as S from "./FilesData.style";
+import "./FilesData.css";
 
 interface Props {
   data: Data | null;
@@ -41,10 +42,11 @@ export const FilesData: React.FC<Props> = ({
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
   return (
-    <S.StyledFilesWrapper>
+    <div className="files-grid">
       {data?.archivos &&
-        data.archivos.map((item: file_atributes, index: any) => (
-          <S.StyledFileBox
+        data.archivos.map((item: file_atributes, index: number) => (
+          <div
+            className="file-card"
             onClick={() => {
               if (!optionMenu.current) {
                 console.log("Click en la imagen");
@@ -54,8 +56,19 @@ export const FilesData: React.FC<Props> = ({
             }}
             key={index}
           >
-            <S.StyledOptionsFileWrapper>
-              <S.FileNameContainer>{item.file_name}</S.FileNameContainer>
+            <div className="file-card-heading">
+              <span
+                className={`file-type-icon ${imageExtensions.includes(item.extension.toLowerCase()) ? "file-type-icon--image" : ""}`}
+              >
+                {imageExtensions.includes(item.extension.toLowerCase()) ? (
+                  <FiImage aria-hidden="true" />
+                ) : (
+                  <FiFileText aria-hidden="true" />
+                )}
+              </span>
+              <span className="file-name" title={item.file_name}>
+                {item.file_name}
+              </span>
               <ContextMenu
                 opened={selectedFile === item.file_name}
                 onChange={(opened) => {
@@ -71,25 +84,55 @@ export const FilesData: React.FC<Props> = ({
                 isRefreshAfterDelete={isRefreshAfterDelete}
                 setFileExtension={setFileExtension}
               >
-                <SlOptionsVertical
+                <button
+                  className="icon-button"
+                  aria-label={`Opciones de ${item.file_name}`}
                   onClick={() => {
                     console.log("El optionMenu es: ", optionMenu.current);
                   }}
-                  style={{ cursor: "pointer" }}
-                />
+                >
+                  <SlOptionsVertical aria-hidden="true" />
+                </button>
               </ContextMenu>
-            </S.StyledOptionsFileWrapper>
-            {imageExtensions.includes(item.extension.toLowerCase()) ? (
-              <S.StyledImagePreview
-                src={`${API_URL}/files${item.file_path}`}
-                alt="Imagen"
-                key={index}
-              />
-            ) : fileExtensions.includes(item.extension.toLowerCase()) ? (
-              <S.StyledFilePreview />
-            ) : null}
-          </S.StyledFileBox>
+            </div>
+            <div
+              className={`file-preview ${imageExtensions.includes(item.extension.toLowerCase()) ? "file-preview--image" : ""}`}
+            >
+              {imageExtensions.includes(item.extension.toLowerCase()) ? (
+                <img
+                  className="file-image-preview"
+                  src={`${API_URL}/files${item.file_path}`}
+                  alt={item.file_name}
+                  key={index}
+                />
+              ) : fileExtensions.includes(item.extension.toLowerCase()) ? (
+                <span className="file-document">
+                  <FiFileText aria-hidden="true" />
+                  <span>{item.extension.replace(".", "").toUpperCase()}</span>
+                </span>
+              ) : (
+                <span className="file-document file-document--generic">
+                  <FiFile aria-hidden="true" />
+                  <span>
+                    {item.extension.replace(".", "").toUpperCase() || "ARCHIVO"}
+                  </span>
+                </span>
+              )}
+            </div>
+            <div className="file-card-footer">
+              <span>
+                {imageExtensions.includes(item.extension.toLowerCase())
+                  ? "Imagen"
+                  : fileExtensions.includes(item.extension.toLowerCase())
+                    ? "Documento"
+                    : "Archivo"}
+              </span>
+              <span>
+                {item.extension.replace(".", "").toUpperCase() || "ARCHIVO"}
+              </span>
+            </div>
+          </div>
         ))}
-    </S.StyledFilesWrapper>
+    </div>
   );
 };

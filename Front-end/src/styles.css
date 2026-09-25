@@ -1,0 +1,124 @@
+:root {
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  color: #24334b;
+  background: #f6f8fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --color-primary: #3564e4;
+  --color-primary-hover: #254fc5;
+  --color-muted: #748097;
+  --color-border: #e6ebf3;
+  --shadow-dialog: 0 24px 80px #172e5426;
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: inherit;
+  color: #24334b;
+  background: #f6f8fc;
+}
+button,
+input {
+  font: inherit;
+}
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+button,
+a,
+input {
+  transition:
+    background-color 160ms,
+    border-color 160ms,
+    box-shadow 160ms;
+}
+:focus-visible {
+  outline: 3px solid #8daaff;
+  outline-offset: 4px;
+}
+::selection {
+  background: #dce7ff;
+}
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 11px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: white;
+  color: #34435b;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.button:hover:not(:disabled) {
+  background: #f5f7fb;
+  border-color: #cbd6e7;
+}
+.button svg {
+  flex-shrink: 0;
+  font-size: 19px;
+}
+.button--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 3px 8px #3564e41a;
+}
+.button--primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-muted);
+}
+.icon-button:hover {
+  background: #e8eef9;
+  color: var(--color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

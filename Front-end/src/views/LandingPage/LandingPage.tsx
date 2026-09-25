@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MainPage } from "../MainPage";
 import { Navbar } from "../Navbar";
 
-import * as S from "./LandingPage.style";
+import "./LandingPage.css";
 
 export const LandingPage: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean | null>(false);
@@ -11,7 +11,7 @@ export const LandingPage: React.FC = () => {
   const [showFolderModal, setShowFolderModal] = useState<boolean | null>(false);
 
   return (
-    <S.StyledLandingPageWrapper>
+    <div className="app-layout">
       <Navbar />
       <MainPage
         showModal={showModal}
@@ -21,6 +21,6 @@ export const LandingPage: React.FC = () => {
         setShowFileModal={setShowFileModal}
         setShowFolderModal={setShowFolderModal}
       />
-    </S.StyledLandingPageWrapper>
+    </div>
   );
 };

@@ -1,4 +1,5 @@
-import * as S from "./Buttons.style";
+import { FiFolderPlus, FiUploadCloud } from "react-icons/fi";
+import "./Buttons.css";
 
 interface Props {
   setShowModal: (valor: boolean | null) => void;
@@ -14,24 +15,26 @@ export const Buttons: React.FC<Props> = ({
   setIsCreateFolder,
 }) => {
   return (
-    <S.StyledButtonWrapper>
-      <S.StyledButton
+    <div className="file-actions">
+      <button
+        className="button"
         onClick={() => {
           setShowModal(true);
           setShowFolderModal(true);
           setIsCreateFolder(true);
         }}
       >
-        Crear carpeta
-      </S.StyledButton>
-      <S.StyledButton
+        <FiFolderPlus aria-hidden="true" /> Crear carpeta
+      </button>
+      <button
+        className="button button--primary"
         onClick={() => {
           setShowModal(true);
           setShowFileModal(true);
         }}
       >
-        Subir archivo
-      </S.StyledButton>
-    </S.StyledButtonWrapper>
+        <FiUploadCloud aria-hidden="true" /> Subir archivo
+      </button>
+    </div>
   );
 };

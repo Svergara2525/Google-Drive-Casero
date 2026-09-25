@@ -1,0 +1,66 @@
+.folders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 16px 20px;
+}
+.folder-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  min-height: 84px;
+  padding: 17px 12px 17px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    border-color 160ms,
+    box-shadow 160ms,
+    background-color 160ms;
+}
+.folder-card:hover {
+  border-color: #c6d5f7;
+  background: #fcfdff;
+  box-shadow: 0 4px 16px #26487608;
+}
+.folder-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fff6df;
+  color: #edbd59;
+  font-size: 23px;
+}
+.folder-info {
+  flex: 1;
+  min-width: 0;
+}
+.folder-name {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 550;
+}
+.folder-caption {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  color: #8a96a9;
+}
+.folder-card .icon-button {
+  width: 26px;
+  font-size: 13px;
+}
+@media (max-width: 640px) {
+  .folders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 12px;
+  }
+}

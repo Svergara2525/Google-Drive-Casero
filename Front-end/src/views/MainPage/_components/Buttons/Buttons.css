@@ -1,0 +1,17 @@
+.file-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .file-actions {
+    width: 100%;
+  }
+  .file-actions .button {
+    flex: 1;
+    padding-inline: 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}

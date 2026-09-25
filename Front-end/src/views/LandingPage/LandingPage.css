@@ -1,0 +1,16 @@
+.app-layout {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+@media (max-width: 900px) {
+  .app-layout {
+    grid-template-columns: 196px minmax(0, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .app-layout {
+    display: block;
+  }
+}

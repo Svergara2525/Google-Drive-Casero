@@ -1,4 +1,6 @@
 import { Menu } from "@mantine/core";
+import { FiDownload, FiEdit3, FiTrash2 } from "react-icons/fi";
+import "./ContextMenu.css";
 import { API_URL, apiClient } from "../../infrastructure/apiClient";
 import { file_atributes } from "../../Models/file_atributes";
 
@@ -38,17 +40,25 @@ export const ContextMenu: React.FC<Props> = ({
   return (
     <Menu opened={opened} onChange={onChange} closeOnItemClick={false}>
       <Menu.Target>{children}</Menu.Target>
-      <Menu.Dropdown>
+      <Menu.Dropdown className="file-context-menu">
         <Menu.Label>Opciones</Menu.Label>
-        <Menu.Item onClick={() => deleteFile(file.file_path, isFile)}>
-          Borrar Archivo
+        <Menu.Item
+          className="file-context-menu-delete"
+          leftSection={<FiTrash2 aria-hidden="true" />}
+          onClick={() => deleteFile(file.file_path, isFile)}
+        >
+          {isFile ? "Borrar archivo" : "Borrar carpeta"}
         </Menu.Item>
         <Menu.Item
+          leftSection={<FiDownload aria-hidden="true" />}
           component="a"
           href={`${API_URL}/download_file${file.file_path ?? ""}`}
           download={file.file_name ?? undefined}
-        ></Menu.Item>
+        >
+          Descargar
+        </Menu.Item>
         <Menu.Item
+          leftSection={<FiEdit3 aria-hidden="true" />}
           onClick={() => {
             setShowModal(true);
             setShowFolderModal(true);
@@ -56,7 +66,7 @@ export const ContextMenu: React.FC<Props> = ({
             setFileExtension(file.extension);
           }}
         >
-          Cambiar Nombre
+          Cambiar nombre
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

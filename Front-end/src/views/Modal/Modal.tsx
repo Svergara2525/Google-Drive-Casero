@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import { apiClient } from "../../infrastructure/apiClient";
 
-import * as S from "./Modal.style";
+import { FiCloud, FiFileText, FiFolderPlus, FiEdit3 } from "react-icons/fi";
+import "./Modal.css";
 
 interface Props {
   setShowModal: (valor: boolean | null) => void;
@@ -105,37 +106,60 @@ export const Modal: React.FC<Props> = ({
   };
 
   return (
-    <S.BackgroundDark onClick={() => handleClickModal()}>
-      <S.ModalWrapper
+    <div className="modal-backdrop" onClick={() => handleClickModal()}>
+      <div
+        className="modal-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
         onClick={() => {
           clickModal.current = true;
         }}
       >
         {showFileModal && (
-          <S.ModalOptionWrapper>
-            <S.StyledFileUploader>
+          <div className="modal-content">
+            <div className="modal-heading">
+              <span className="modal-heading-icon">
+                <FiCloud aria-hidden="true" />
+              </span>
+              <h2 id="modal-title">Subir archivos</h2>
+              <p>Añade nuevos archivos a tu espacio personal.</p>
+            </div>
+            <div className="file-uploader">
               <input
                 type="file"
                 id="file-upload"
                 multiple
                 onChange={handleFileChange}
-                style={{ display: "none" }}
+                className="file-upload-input"
               />
-              <label htmlFor="file-upload" style={{ cursor: "pointer" }}>
+              <label htmlFor="file-upload" className="file-upload-label">
                 {selectedFiles === null ? (
-                  <S.CloudUploadIcon />
+                  <>
+                    <FiCloud className="upload-icon" aria-hidden="true" />
+                    <span className="file-select-text">
+                      Selecciona tus archivos
+                    </span>
+                    <span className="file-select-caption">
+                      Haz clic para explorar tu dispositivo
+                    </span>
+                  </>
                 ) : (
-                  <S.SelectedFileWrapper>
-                    <S.FileIcon />
-                    <S.FileSelectText>
+                  <span className="selected-file">
+                    <FiFileText className="upload-icon" aria-hidden="true" />
+                    <span className="file-select-text">
                       {selectedFiles.length + " Archivos seleccionados"}
-                    </S.FileSelectText>
-                  </S.SelectedFileWrapper>
+                    </span>
+                    <span className="file-select-caption">
+                      Haz clic para cambiar la selección
+                    </span>
+                  </span>
                 )}
               </label>
-            </S.StyledFileUploader>
-            <S.ButtonsWrapper>
-              <S.StyledButton
+            </div>
+            <div className="modal-actions">
+              <button
+                className="button button--primary"
                 disabled={!selectedFiles}
                 onClick={() => {
                   handleUpload();
@@ -144,29 +168,53 @@ export const Modal: React.FC<Props> = ({
                 }}
               >
                 Subir archivo
-              </S.StyledButton>
-              <S.StyledButton
+              </button>
+              <button
+                className="button"
                 onClick={() => {
                   setShowModal(false);
                   setShowFileModal(false);
                 }}
               >
                 Cerrar
-              </S.StyledButton>
-            </S.ButtonsWrapper>
-          </S.ModalOptionWrapper>
+              </button>
+            </div>
+          </div>
         )}
 
         {showFolderModal && (
-          <S.ModalOptionWrapper>
-            <S.StyledInputFolderName
+          <div className="modal-content">
+            <div className="modal-heading">
+              <span className="modal-heading-icon">
+                {isCreateFolder ? (
+                  <FiFolderPlus aria-hidden="true" />
+                ) : (
+                  <FiEdit3 aria-hidden="true" />
+                )}
+              </span>
+              <h2 id="modal-title">
+                {isCreateFolder ? "Crear carpeta" : "Cambiar nombre"}
+              </h2>
+              <p>
+                {isCreateFolder
+                  ? "Un nuevo lugar para mantener todo organizado."
+                  : "Elige un nuevo nombre para este elemento."}
+              </p>
+            </div>
+            <label className="folder-input-label" htmlFor="folder-name">
+              {isCreateFolder ? "Nombre de la carpeta" : "Nuevo nombre"}
+            </label>
+            <input
+              className="folder-name-input"
+              id="folder-name"
               placeholder="Introduce el nombre"
               type="text"
               value={folderName ?? ""}
               onChange={handleFolderName}
             />
-            <S.ButtonsWrapper>
-              <S.StyledButton
+            <div className="modal-actions">
+              <button
+                className="button button--primary"
                 disabled={!folderName}
                 onClick={() => {
                   handleNombreCarpeta(folderName ?? "");
@@ -175,8 +223,9 @@ export const Modal: React.FC<Props> = ({
                 }}
               >
                 {isCreateFolder ? "Crear carpeta" : "Cambiar nombre"}
-              </S.StyledButton>
-              <S.StyledButton
+              </button>
+              <button
+                className="button"
                 onClick={() => {
                   setShowModal(false);
                   setShowFolderModal(false);
@@ -184,11 +233,11 @@ export const Modal: React.FC<Props> = ({
                 }}
               >
                 Cerrar
-              </S.StyledButton>
-            </S.ButtonsWrapper>
-          </S.ModalOptionWrapper>
+              </button>
+            </div>
+          </div>
         )}
-      </S.ModalWrapper>
-    </S.BackgroundDark>
+      </div>
+    </div>
   );
 };

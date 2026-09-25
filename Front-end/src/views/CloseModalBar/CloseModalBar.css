@@ -1,0 +1,57 @@
+.preview-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 66px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #ffffff1a;
+  background: #162035;
+  color: #eef3ff;
+}
+.preview-tool-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #eef3ff;
+  font-size: 22px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.preview-tool-button:hover {
+  background: #ffffff12;
+  border-color: #ffffff20;
+}
+.preview-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+  font-size: 13px;
+}
+.preview-title svg {
+  flex-shrink: 0;
+  color: #95acd4;
+  font-size: 19px;
+}
+.preview-title span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+@media (max-width: 640px) {
+  .preview-toolbar {
+    padding-inline: 12px;
+    gap: 10px;
+  }
+}

@@ -1,7 +1,8 @@
 import { file_atributes } from "../../Models/file_atributes";
 import { API_URL } from "../../infrastructure/apiClient";
 
-import * as S from "./CloseModalBar.style";
+import { FiX, FiDownload, FiFile } from "react-icons/fi";
+import "./CloseModalBar.css";
 
 interface Props {
   setOpenModal: (valor: boolean | null) => void;
@@ -10,14 +11,27 @@ interface Props {
 
 export const CloseModalBar: React.FC<Props> = ({ setOpenModal, imagen }) => {
   return (
-    <>
-      <S.StyledCloseButton onClick={() => setOpenModal(false)} />
-      <S.StyledDownloadWrapper
+    <div className="preview-toolbar">
+      <button
+        className="preview-tool-button"
+        aria-label="Cerrar vista previa"
+        onClick={() => setOpenModal(false)}
+      >
+        <FiX aria-hidden="true" />
+      </button>
+      <div className="preview-title">
+        <FiFile aria-hidden="true" />
+        <span>{imagen?.file_name}</span>
+      </div>
+      <a
+        className="preview-tool-button"
+        aria-label="Descargar archivo"
+        title="Descargar archivo"
         href={`${API_URL}/download_file${imagen?.file_path}`}
         download={imagen?.file_name}
       >
-        <S.StyledDownloadButton />
-      </S.StyledDownloadWrapper>
-    </>
+        <FiDownload aria-hidden="true" />
+      </a>
+    </div>
   );
 };
